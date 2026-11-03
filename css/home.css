@@ -104,6 +104,19 @@
 .home .stat svg { width: 40px; height: 40px; stroke: #ececec; stroke-width: 1.1; filter: drop-shadow(0 0 6px rgba(255,255,255,.12)); }
 .home .stat b { font-size: 37px; }
 .home .stat small { white-space: nowrap; font-size: 12px; color: #a0a0a0; margin-top: 8px; }
+/* stat hover: copper glow behind the icon, glowing number, brighter label */
+.home .stat { position: relative; }
+.home .stat::before { content: ""; position: absolute; left: -16px; top: 50%; width: 80px; height: 80px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(226,160,104,.34) 0%, rgba(226,160,104,.1) 45%, transparent 70%);
+  opacity: 0; transform: translateY(-50%) scale(.6); transition: opacity .45s, transform .6s cubic-bezier(.2,.8,.2,1); }
+.home .stat svg, .home .stat b, .home .stat small { position: relative; }
+.home .stat svg { transition: stroke .35s, transform .6s cubic-bezier(.2,.8,.2,1), filter .45s; }
+.home .stat b { transition: color .35s, text-shadow .45s; }
+.home .stat small { transition: color .35s; }
+.home .stat:hover::before { opacity: 1; transform: translateY(-50%) scale(1); }
+.home .stat:hover svg { stroke: #e6b08a; filter: drop-shadow(0 0 6px rgba(230,170,120,.85)) drop-shadow(0 0 16px rgba(226,160,104,.45)); }
+.home .stat:hover b { color: #ecc29e; text-shadow: 0 0 12px rgba(230,170,120,.65), 0 0 30px rgba(226,160,104,.35); }
+.home .stat:hover small { color: #d9c2ae; }
 
 /* ---------------------------------------------------------------- Quote */
 .home .quote { height: clamp(200px, 17.7vw, 262px); background: #101010; }
