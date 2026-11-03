@@ -52,12 +52,12 @@ def overlay_html():
             '</aside></div></div>' % ("".join(lis), LINKEDIN, INSTAGRAM)).replace("<ol", "<ol", 1)
 
 
-def footer_html():
+def footer_html(privacy=True):
     return ('<footer><div class="wrap"><div class="f-left">'
             '<a href="index.html" aria-label="Back home" style="color:var(--fg)"><span class="logo-mark sm"></span></a>'
             '<small>&copy; 2023. All Rights Reserved. / Web Design by Marketing Originals.</small></div>'
             '<div class="f-right"><a href="%s" target="_blank" rel="noopener">LinkedIn</a>'
-            '<a href="%s" target="_blank" rel="noopener">Instagram</a><a href="privacy.html">Privacy</a></div></div></footer>' % (LINKEDIN, INSTAGRAM))
+            '<a href="%s" target="_blank" rel="noopener">Instagram</a>%s</div></div></footer>' % (LINKEDIN, INSTAGRAM, '<a href="privacy.html">Privacy</a>' if privacy else ''))
 
 
 def connect_html(title="Have a project in mind?", text="Let&rsquo;s turn your ideas into something extraordinary.",
@@ -67,7 +67,7 @@ def connect_html(title="Have a project in mind?", text="Let&rsquo;s turn your id
             '<a class="btn" href="%s">%s <svg><use href="#arrow"/></svg></a></div></section>' % (img, eyebrow, title, text, href, btn))
 
 
-def page(fname, title, body, active=None, desc="", loader=False, data=False):
+def page(fname, title, body, active=None, desc="", loader=False, data=False, css=None, body_class=None, privacy=True):
     loading = '"js","loading"' if loader else '"js"'
     loader_html = ('<div id="loader" aria-hidden="true"><span class="logo-mark"></span><div class="bar"></div><small>Dex World</small></div>'
                    if loader else "")
@@ -77,14 +77,15 @@ def page(fname, title, body, active=None, desc="", loader=False, data=False):
             '<title>%s</title>\n<meta name="description" content="%s">\n<meta name="theme-color" content="#0a0a0a">\n'
             '<link rel="icon" href="images/favicon.png">\n'
             '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-            '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400;700&display=swap">\n'
-            '<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css">\n'
-            '</head>\n<body>\n<script>document.documentElement.classList.add(%s)</script>\n%s\n'
+            '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap">\n'
+            '<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css">%s\n'
+            '</head>\n<body%s>\n<script>document.documentElement.classList.add(%s)</script>\n%s\n'
             '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
             '<symbol id="arrow" viewBox="0 0 14 10"><path d="M0 5h12M8 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1"/></symbol></defs></svg>\n'
             '%s\n%s\n<main>\n%s\n</main>\n%s\n%s\n</body>\n</html>\n'
-            % (title, desc or "Dex World – Dream. Explore. Xperate. A journey beyond limits.", loading, loader_html,
-               nav_html(active), overlay_html(), body, footer_html(), scripts))
+            % (title, desc or "Dex World – Dream. Explore. Xperate. A journey beyond limits.",
+               ('<link rel="stylesheet" href="%s">' % css) if css else "", (' class="%s"' % body_class) if body_class else "",
+               loading, loader_html, nav_html(active), overlay_html(), body, footer_html(privacy), scripts))
     (ROOT / fname).write_text(html, encoding="utf-8")
     print("wrote", fname, len(html) // 1024, "KB")
 
@@ -104,7 +105,7 @@ home = (home.replace('href="#journey"><span class="c">', 'href="journey.html"><s
             .replace('href="#gallery">View Gallery', 'href="gallery.html">View Gallery')
             .replace('href="#contact">Get in Touch', 'href="contact.html">Get in Touch'))
 home = re.sub(r'<section class="connect" id="contact">', '<section class="connect" id="contact">', home)
-page("index.html", "Dex World", home, active="index.html", loader=True,
+page("index.html", "Dex World", home, active="index.html", loader=True, css="css/home.css", body_class="home", privacy=False,
      desc="Dex World – Dream. Explore. Xperate. A journey beyond limits.")
 
 # expertise block reused on the About page

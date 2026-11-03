@@ -9,10 +9,10 @@
 <link rel="icon" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400;700&display=swap">
-<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap">
+<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css"><link rel="stylesheet" href="css/home.css">
 </head>
-<body>
+<body class="home">
 <script>document.documentElement.classList.add("js","loading")</script>
 <div id="loader" aria-hidden="true"><span class="logo-mark"></span><div class="bar"></div><small>Dex World</small></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="arrow" viewBox="0 0 14 10"><path d="M0 5h12M8 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1"/></symbol></defs></svg>
@@ -22,7 +22,7 @@
 <section class="hero" id="home">
     <!-- Set --portrait-img: url(...) on .portrait to use a real photo -->
     <div class="portrait" style="background-image:url(images/hero.jpg)" role="img" aria-label="Portrait"></div>
-    <span class="arc a"></span><span class="arc b"></span>
+    <span class="arc halo" aria-hidden="true"></span><span class="arc a" aria-hidden="true"></span><span class="arc b" aria-hidden="true"></span><span class="bloom" aria-hidden="true"></span>
     <div class="wrap hero-in">
       <div class="hero-copy">
         <div class="eyebrow">Dex World</div>
@@ -37,12 +37,13 @@
   <section class="about" id="about">
     <div class="wrap about-grid reveal">
       <div class="frame" data-tilt="9">
+        <span class="shelf" aria-hidden="true"></span>
         <div class="photo">
-          <img src="images/about.jpg" alt="Traveler seated on a rock above a misty valley" style="width:100%;height:100%;object-fit:cover;display:block">
+          <img src="images/g-summit.jpg" alt="Traveler with a backpack seated on a rock above the clouds" style="width:100%;height:100%;object-fit:cover;display:block">
         </div>
       </div>
       <div>
-        <div class="eyebrow copper" style="color:var(--fg)">About me</div>
+        <div class="eyebrow copper">About me</div>
         <h2>Deniz</h2>
         <p>A lateral thinker with affinity to design thinking who his name Deniz – the translation means sea – makes all honor. Always chasing new challenges, exploring the unknown and pushing boundaries.</p>
         <a class="btn" href="about.html">Discover More <svg><use href="#arrow"/></svg></a>
@@ -65,7 +66,7 @@
   </section>
 
   <section class="quote" aria-label="Quote">
-    <img class="m" src="images/quote.jpg" alt="" aria-hidden="true">
+    <img class="m" src="images/connect.jpg" alt="" aria-hidden="true">
     <div class="q reveal">
       <blockquote>When everything seems to be against you, remember that the airplane takes off against the wind, not with it.</blockquote>
       <cite>Henry Ford</cite>
@@ -86,7 +87,7 @@
         <div class="tech" role="listitem"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10h6M10 10v7M14.5 17c.5.5 1.2.7 2 .7 1 0 1.7-.5 1.7-1.2 0-1.7-3.6-.9-3.6-2.6 0-.7.6-1.2 1.6-1.2.7 0 1.3.2 1.8.6"/></svg></i>TypeScript</div>
         <div class="tech" role="listitem"><i><svg viewBox="0 0 24 24"><path d="M12 2.5l8 4.5v10l-8 4.5-8-4.5V7z"/><path d="M9 15v-4.5M12 15v-4.5M15 10.5v4"/></svg></i>Node.js</div>
         <div class="tech" role="listitem"><i><svg viewBox="0 0 24 24"><path d="M12 3c-3 0-4 1.2-4 2.8V8h5v1H6.5C4.8 9 4 10.4 4 12.3s.8 3.2 2.5 3.2H8v-2.2c0-1.6 1.2-2.8 2.8-2.8h3.4c1.3 0 2.3-1 2.3-2.3V5.8C16.5 4.2 15 3 12 3z"/><path d="M12 21c3 0 4-1.2 4-2.8V16h-5v-1h6.5c1.7 0 2.5-1.4 2.5-3.3s-.8-3.2-2.5-3.2H16v2.2c0 1.6-1.2 2.8-2.8 2.8H9.8c-1.3 0-2.3 1-2.3 2.3v2.2C7.5 19.800 9 21 12 21z"/></svg></i>Python</div>
-        <div class="tech" role="listitem"><i><svg viewBox="0 0 24 24"><path d="M12 2.5c3 3.500 4.500 7 4 11-.3 3-2 5.500-4 7-2-1.500-3.700-4-4-7-.5-4 1-7.500 4-11z" style="fill:#12301f;stroke:#4f9a6a"/><path d="M12 14v8" stroke="#4f9a6a"/></svg></i>MongoDB</div>
+        <div class="tech" role="listitem"><i><svg viewBox="0 0 24 24"><path d="M12 2.5c3 3.500 4.500 7 4 11-.3 3-2 5.500-4 7-2-1.500-3.700-4-4-7-.5-4 1-7.500 4-11z" style="fill:#1c2630;stroke:#8fa3b5"/><path d="M12 14v8" stroke="#8fa3b5"/></svg></i>MongoDB</div>
         <div class="tech" role="listitem"><i><svg viewBox="0 0 24 24"><path d="M6 8c0-3 3-5 7-5s6 2 6 5c0 4-2 8-4 9-1 .5-2-.5-2-2V9"/><path d="M6 8c-1.500 0-2.500 1.500-2 4s2 5 3.500 5c1 0 1.500-1 1.500-2v-4"/><circle cx="15.500" cy="8" r=".7" fill="currentColor"/></svg></i>PostgreSQL</div>
         <div class="tech" role="listitem"><i><span style="font-size:12px;font-weight:500;line-height:1;text-align:center">aws<svg viewBox="0 0 24 8" style="display:block;width:20px;height:7px;margin-top:1px;stroke:#d99a52"><path d="M2 3c6 4 14 4 20 0M19 2l3 1-1.500 2.500"/></svg></span></i>AWS</div>
         <div class="tech" role="listitem"><i><svg viewBox="0 0 24 24" style="stroke:#6fa6d8"><path d="M2 12.500h19c0 3.500-3 7-9 7s-9-3.500-10-7z"/><path d="M5 9.500h3v3H5zM9 9.500h3v3H9zM13 9.500h3v3h-3zM9 6.500h3v3H9z"/></svg></i>Docker</div>
@@ -113,7 +114,7 @@
   </section>
 
   <section class="connect" id="contact">
-    <img class="m" src="images/connect.jpg" alt="" aria-hidden="true">
+    <img class="m" src="images/g-peaks.jpg" alt="" aria-hidden="true">
     <div class="c reveal">
       <div class="eyebrow" style="color:var(--fg)">Let's connect</div>
       <h2>Have a project in mind?</h2>
@@ -123,7 +124,7 @@
   </section>
 
 </main>
-<footer><div class="wrap"><div class="f-left"><a href="index.html" aria-label="Back home" style="color:var(--fg)"><span class="logo-mark sm"></span></a><small>&copy; 2023. All Rights Reserved. / Web Design by Marketing Originals.</small></div><div class="f-right"><a href="https://www.linkedin.com/in/deniz-onaral-39b955b6" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/d.xaral/" target="_blank" rel="noopener">Instagram</a><a href="privacy.html">Privacy</a></div></div></footer>
+<footer><div class="wrap"><div class="f-left"><a href="index.html" aria-label="Back home" style="color:var(--fg)"><span class="logo-mark sm"></span></a><small>&copy; 2023. All Rights Reserved. / Web Design by Marketing Originals.</small></div><div class="f-right"><a href="https://www.linkedin.com/in/deniz-onaral-39b955b6" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/d.xaral/" target="_blank" rel="noopener">Instagram</a></div></div></footer>
 <script src="js/site.js"></script><script src="js/pages.js"></script>
 </body>
 </html>
