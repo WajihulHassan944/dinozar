@@ -61,13 +61,13 @@ def footer_html(privacy=True):
 
 
 def connect_html(title="Have a project in mind?", text="Let&rsquo;s turn your ideas into something extraordinary.",
-                 btn="Get in Touch", href="contact.html", img="connect.jpg", eyebrow="Let&rsquo;s connect"):
+                 btn="Get in Touch", href="contact.html", img="g-peaks.jpg", eyebrow="Let&rsquo;s connect"):
     return ('<section class="connect"><img class="m" src="images/%s" alt="" aria-hidden="true"><div class="c reveal">'
             '<div class="eyebrow" style="color:var(--fg)">%s</div><h2>%s</h2><p>%s</p>'
             '<a class="btn" href="%s">%s <svg><use href="#arrow"/></svg></a></div></section>' % (img, eyebrow, title, text, href, btn))
 
 
-def page(fname, title, body, active=None, desc="", loader=False, data=False, css=None, body_class=None, privacy=True):
+def page(fname, title, body, active=None, desc="", loader=False, data=False, css="css/premium.css", body_class="inner", privacy=True):
     loading = '"js","loading"' if loader else '"js"'
     loader_html = ('<div id="loader" aria-hidden="true"><span class="logo-mark"></span><div class="bar"></div><small>Dex World</small></div>'
                    if loader else "")
@@ -78,7 +78,7 @@ def page(fname, title, body, active=None, desc="", loader=False, data=False, css
             '<link rel="icon" href="images/favicon.png">\n'
             '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
             '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap">\n'
-            '<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css">%s\n'
+            '<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css"><link rel="stylesheet" href="css/theme.css">%s\n'
             '</head>\n<body%s>\n<script>document.documentElement.classList.add(%s)</script>\n%s\n'
             '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
             '<symbol id="arrow" viewBox="0 0 14 10"><path d="M0 5h12M8 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1"/></symbol></defs></svg>\n'
@@ -90,8 +90,15 @@ def page(fname, title, body, active=None, desc="", loader=False, data=False, css
     print("wrote", fname, len(html) // 1024, "KB")
 
 
+PHERO_IMG = {"About": "portrait.jpg", "Journey": "ship.jpg", "Gallery": "g-clouds.jpg", "Press": "g-harbor.jpg",
+             "Wiki": "g-fog.jpg", "Tips & Tricks": "g-sunset.jpg", "Stories": "g-mist.jpg", "Contact": "g-tanker.jpg",
+             "Privacy Policy": "g-peaks.jpg"}
+
+
 def phero(eyebrow, title, lead, crumb, img=None, actions=""):
-    pimg = '<div class="pimg" style="background-image:url(images/%s)" role="img" aria-label=""></div>' % img if img else ""
+    img = img or PHERO_IMG.get(crumb)
+    pimg = '<div class="pimg" style="background-image:url(images/%s)" aria-hidden="true"></div>' % img if img else ""
+    pimg += '<span class="ph-arc" aria-hidden="true"></span><span class="ph-bloom" aria-hidden="true"></span>'
     return ('<section class="phero">%s<div class="wrap"><p class="crumbs"><a href="index.html">Home</a><i></i><span>%s</span></p>'
             '<div class="eyebrow" style="margin-bottom:22px">%s</div><h1>%s</h1><p class="lead">%s</p>%s</div></section>'
             % (pimg, crumb, eyebrow, title, lead, ('<div class="phero-actions">%s</div>' % actions) if actions else ""))
@@ -105,7 +112,7 @@ home = (home.replace('href="#journey"><span class="c">', 'href="journey.html"><s
             .replace('href="#gallery">View Gallery', 'href="gallery.html">View Gallery')
             .replace('href="#contact">Get in Touch', 'href="contact.html">Get in Touch'))
 home = re.sub(r'<section class="connect" id="contact">', '<section class="connect" id="contact">', home)
-page("index.html", "Dex World", home, active="index.html", loader=True, css="css/home.css", body_class="home", privacy=False,
+page("index.html", "Dex World", home, active="index.html", loader=True, css=None, body_class="home", privacy=False,
      desc="Dex World – Dream. Explore. Xperate. A journey beyond limits.")
 
 # expertise block reused on the About page
