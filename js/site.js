@@ -64,3 +64,29 @@
   Promise.all([minWait,loaded]).then(begin);
   setTimeout(begin,4500); // failsafe
 })();
+(function(){
+  // count-up animation for stat numbers (e.g. "5+", "50+", "100%")
+  var els=[].slice.call(document.querySelectorAll('.stat b'));
+  if(!els.length||matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window)) return;
+  var root=document.documentElement;
+  els.forEach(function(el){
+    var m=el.textContent.trim().match(/^(\D*)(\d+)(.*)$/); if(!m) return;
+    el.dataset.pre=m[1]; el.dataset.to=m[2]; el.dataset.suf=m[3];
+    el.style.fontVariantNumeric='tabular-nums lining-nums';
+    el.textContent=m[1]+'0'+m[3];
+  });
+  function run(el){
+    var to=+el.dataset.to, pre=el.dataset.pre, suf=el.dataset.suf, dur=1600+Math.min(to,100)*6, t0=null;
+    (function step(t){
+      if(!root.classList.contains('ready')&&document.getElementById('loader')){requestAnimationFrame(step);return;}
+      if(t0===null) t0=t;
+      var p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,4);
+      el.textContent=pre+Math.round(to*e)+suf;
+      if(p<1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting&&e.target.dataset.to){io.unobserve(e.target);setTimeout(function(){run(e.target)},350);}
+  })},{threshold:.6});
+  els.forEach(function(el){if(el.dataset.to) io.observe(el)});
+})();
