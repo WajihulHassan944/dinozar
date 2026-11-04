@@ -193,15 +193,28 @@ values_html = "".join('<article class="val reveal" style="--d:%ss"><span class="
                       % (i * .12, n, ic, t, d) for i, (n, t, d, ic) in enumerate(values))
 
 numbers = [("2011", "In Austria since"), ("2", "Medals at the AEHT"), ("2016", "Rio Olympic internship"), ("16", "Stories published")]
-numbers_html = "".join('<div class="fact"><b>%s</b><small>%s</small></div>' % n for n in numbers)
+num_ic = ['<path d="M12 21s-6.5-6.1-6.5-11a6.5 6.5 0 0 1 13 0c0 4.9-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>',
+          '<circle cx="12" cy="9" r="5"/><path d="M8.6 12.7L7 21l5-2.6 5 2.6-1.6-8.3"/>',
+          '<circle cx="6" cy="10" r="3"/><circle cx="12" cy="10" r="3"/><circle cx="18" cy="10" r="3"/><circle cx="9" cy="13.5" r="3"/><circle cx="15" cy="13.5" r="3"/>',
+          '<path d="M17.5 3.5l3 3L9 18l-4 1 1-4z"/><path d="M15 6l3 3M4 21h16"/>']
+numbers_html = "".join('<div class="fact"><i><svg viewBox="0 0 24 24">%s</svg></i><b>%s</b><small>%s</small></div>' % (num_ic[k], n[0], n[1]) for k, n in enumerate(numbers))
 
 strip_imgs = ["g-summit.jpg", "ship.jpg", "g-clouds.jpg", "g-harbor.jpg", "g-fog.jpg", "g-sunset.jpg", "g-peaks.jpg", "g-tanker.jpg", "g-mist.jpg", "journey.jpg"]
 strip = "".join('<figure><img src="images/%s" alt="" loading="lazy"></figure>' % i for i in strip_imgs)
 outlets = ["Kleine Zeitung", "MeinBezirk", "&Ouml;3", "Vi2day", "APA-OTS", "Austria House", "KTS Villach", "Hayek Institut"]
 
 about_body = (
-    phero("About me", "Deniz", "A lateral thinker with affinity to design thinking &mdash; whose name, Deniz, means <em style=\"font-style:normal;color:var(--copper)\">sea</em> in Turkish.",
-          "About", img="portrait.jpg", actions='<a class="btn" href="#story">Read my story ' + ARW + '</a><a class="btn" href="journey.html">See my journey ' + ARW + '</a>')
+    '<section class="ab-hero"><span class="ph-arc" aria-hidden="true"></span><span class="ph-bloom" aria-hidden="true"></span><div class="wrap ab-hero-grid">'
+      '<div class="ab-hero-copy"><p class="crumbs"><a href="index.html">Home</a><i></i><span>About</span></p><div class="eyebrow">About me</div>'
+      '<h1><span class="ln"><span>Deniz</span></span><span class="ln o"><span>Onaral</span></span></h1>'
+      '<p class="lead">A lateral thinker with affinity to design thinking &mdash; whose name, Deniz, means <em>sea</em> in Turkish. Always chasing new challenges, exploring the unknown and pushing boundaries.</p>'
+      '<div class="phero-actions"><a class="btn" href="#story">Read my story ' + ARW + '</a><a class="btn" href="journey.html">See my journey ' + ARW + '</a></div>'
+      '<ul class="ab-chips"><li>Turkish roots</li><li>Based in Austria</li><li>Hospitality &amp; design thinking</li></ul></div>'
+      '<div class="ab-portrait"><div class="ab-arch"><img src="images/deniz.jpg" alt="Deniz Onaral, arms crossed, smiling" fetchpriority="high"></div>'
+      '<div class="ab-float f1"><b>Rio 2016</b><small>Olympic internship</small></div><div class="ab-float f2"><b>COP24</b><small>Reached by train</small></div>'
+      '<div class="ab-seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="sealp" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs>'
+      '<text><textPath href="#sealp">DREAM &#183; EXPLORE &#183; XPERATE &#183; DEX WORLD &#183;</textPath></text></svg><span class="logo-mark"></span></div></div>'
+      '</div><a class="ab-scroll" href="#story" aria-label="Scroll to the story"><span></span></a></section>'
     # manifesto
     + '<section class="ab-manifesto"><div class="wrap"><div class="eyebrow reveal">In a few words</div>'
       '<p class="mf" data-words>I grew up between hotel lobbies and the Mediterranean. Today I chase <em>new challenges</em>, cross borders <em>by train</em>, '
@@ -225,10 +238,19 @@ about_body = (
     # values
     + '<section class="sec ab-values"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">What I stand for</div><h2>Three things I never travel without</h2></div>'
       '<div class="vals">' + values_html + '</div></div></section>'
-    # milestones
-    + '<section class="sec"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">Milestones</div><h2>The road so far</h2>'
-      '<p>A few of the stops that shaped the way of thinking.</p></div><div class="tl">' + tl_items + '</div>'
-      '<div class="ab-more reveal"><a class="btn" href="journey.html">Follow the full journey ' + ARW + '</a></div></div></section>'
+    # favourite quote
+    + '<section class="sec ab-fav"><div class="wrap"><figure class="ab-quote reveal"><span class="ab-qm" aria-hidden="true">&ldquo;</span>'
+      '<blockquote>When everything seems to be against you, remember that the airplane takes off <em>against the wind</em>, not with it.</blockquote>'
+      '<figcaption><span class="ab-qph"><img src="images/deniz.jpg" alt=""></span><span><b>Henry Ford</b><small>One of Deniz&rsquo;s favourite lines</small></span></figcaption></figure></div></section>'
+    # milestones rail
+    + '<section class="sec ab-rail-sec"><div class="wrap"><div class="ab-rail-head reveal"><div><div class="eyebrow">Milestones</div><h2>Then <em>&rarr;</em> now</h2>'
+      '<p>Six stops that shaped the way of thinking. Drag, swipe or use the arrows.</p></div>'
+      '<div class="ab-rail-nav"><button class="rp" aria-label="Previous milestone"><svg viewBox="0 0 16 16"><path d="M13 8H3.5M7.5 3.5L3 8l4.5 4.5"/></svg></button>'
+      '<button class="rn" aria-label="Next milestone"><svg viewBox="0 0 16 16"><path d="M3 8h9.5M8.5 3.5L13 8l-4.5 4.5"/></svg></button></div></div></div>'
+      '<div class="ab-rail" tabindex="0" aria-label="Milestones">' + "".join(
+        '<article class="ms"><div class="ms-ph"><img src="images/%s" alt="" loading="lazy"><span class="ms-yr%s">%s</span></div><div class="ms-tx"><span class="tl-tag">%s</span><h3>%s</h3><p>%s</p></div></article>'
+        % (img, " sm" if len(re.sub("&[a-z]+;", "-", yr)) > 5 else "", yr, tag, ttl, txt) for yr, ttl, txt, img, tag in about_tl) + '<a class="ms ms-more" href="journey.html"><span>Follow the<br>full journey</span>' + ARW + '</a></div>'
+      '<div class="wrap"><div class="ab-rail-bar"><i></i></div></div></section>'
     # photo strip
     + '<section class="ab-strip" aria-label="Photographs from the road"><div class="ab-track">' + strip + strip + '</div></section>'
     # press

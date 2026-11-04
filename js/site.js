@@ -136,3 +136,21 @@
     im.style.setProperty('--py', (((r.top+r.height/2)-h/2)/h*-30).toFixed(1)+'px'); }); }
   addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(upd)} },{passive:true}); upd();
 })();
+(function(){
+  // about milestones rail: arrows, drag to scroll, progress bar
+  var rail=document.querySelector('.ab-rail'); if(!rail) return;
+  var bar=document.querySelector('.ab-rail-bar i'), sec=rail.closest('section');
+  function step(){ var c=rail.querySelector('.ms'); return c ? c.getBoundingClientRect().width+20 : 300; }
+  function upd(){ var max=rail.scrollWidth-rail.clientWidth, p=max>0?rail.scrollLeft/max:1, w=Math.max(.12, rail.clientWidth/rail.scrollWidth);
+    if(bar){ bar.style.width=(w*100)+'%'; bar.style.transform='translateX('+(p*(1/w-1)*100)+'%)'; } }
+  sec.querySelector('.rp').addEventListener('click',function(){ rail.scrollBy({left:-step(),behavior:'smooth'}); });
+  sec.querySelector('.rn').addEventListener('click',function(){ rail.scrollBy({left:step(),behavior:'smooth'}); });
+  rail.addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+  rail.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'){rail.scrollBy({left:step(),behavior:'smooth'});e.preventDefault();} if(e.key==='ArrowLeft'){rail.scrollBy({left:-step(),behavior:'smooth'});e.preventDefault();} });
+  var down=false,sx=0,sl=0,moved=false;
+  rail.addEventListener('pointerdown',function(e){ if(e.pointerType!=='mouse') return; down=true; moved=false; sx=e.clientX; sl=rail.scrollLeft; });
+  addEventListener('pointermove',function(e){ if(!down) return; var dx=e.clientX-sx; if(Math.abs(dx)>4){ moved=true; rail.classList.add('drag'); } rail.scrollLeft=sl-dx; });
+  addEventListener('pointerup',function(){ if(!down) return; down=false; rail.classList.toggle('drag',false);
+    if(moved){ var s=step(); rail.scrollTo({left:Math.round(rail.scrollLeft/s)*s,behavior:'smooth'}); } });
+  rail.addEventListener('click',function(e){ if(moved){ e.preventDefault(); moved=false; } },true);
+})();
