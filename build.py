@@ -204,17 +204,14 @@ strip = "".join('<figure><img src="images/%s" alt="" loading="lazy"></figure>' %
 outlets = ["Kleine Zeitung", "MeinBezirk", "&Ouml;3", "Vi2day", "APA-OTS", "Austria House", "KTS Villach", "Hayek Institut"]
 
 about_body = (
-    '<section class="ab-hero"><span class="ph-arc" aria-hidden="true"></span><span class="ph-bloom" aria-hidden="true"></span><div class="wrap ab-hero-grid">'
-      '<div class="ab-hero-copy"><p class="crumbs"><a href="index.html">Home</a><i></i><span>About</span></p><div class="eyebrow">About me</div>'
-      '<h1><span class="ln"><span>Deniz</span></span><span class="ln o"><span>Onaral</span></span></h1>'
-      '<p class="lead">A lateral thinker with affinity to design thinking &mdash; whose name, Deniz, means <em>sea</em> in Turkish. Always chasing new challenges, exploring the unknown and pushing boundaries.</p>'
-      '<div class="phero-actions"><a class="btn" href="#story">Read my story ' + ARW + '</a><a class="btn" href="journey.html">See my journey ' + ARW + '</a></div>'
-      '<ul class="ab-chips"><li>Turkish roots</li><li>Based in Austria</li><li>Hospitality &amp; design thinking</li></ul></div>'
-      '<div class="ab-portrait"><div class="ab-arch"><img src="images/deniz.jpg" alt="Deniz Onaral, arms crossed, smiling" fetchpriority="high"></div>'
-      '<div class="ab-float f1"><b>Rio 2016</b><small>Olympic internship</small></div><div class="ab-float f2"><b>COP24</b><small>Reached by train</small></div>'
-      '<div class="ab-seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="sealp" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs>'
-      '<text><textPath href="#sealp">DREAM &#183; EXPLORE &#183; XPERATE &#183; DEX WORLD &#183;</textPath></text></svg><span class="logo-mark"></span></div></div>'
-      '</div><a class="ab-scroll" href="#story" aria-label="Scroll to the story"><span></span></a></section>'
+    '<section class="ab-hero"><div class="ab-hero-bg" aria-hidden="true"></div><div class="ab-hero-ph" role="img" aria-label="Deniz Onaral, arms crossed, smiling"></div><span class="ph-arc" aria-hidden="true"></span><span class="ph-bloom" aria-hidden="true"></span>'
+      '<div class="wrap ab-hero-in"><div class="ab-hero-copy"><p class="crumbs"><a href="index.html">Home</a><i></i><span>About</span></p><div class="eyebrow">About me</div>'
+      '<h1><span class="ln"><span>Deniz</span></span></h1><p class="ab-sub">Onaral &nbsp;&middot;&nbsp; <em>the sea</em> in Turkish</p>'
+      '<p class="lead">A lateral thinker with affinity to design thinking &mdash; always chasing new challenges, exploring the unknown and pushing boundaries.</p>'
+      '<div class="phero-actions"><a class="btn" href="#story">Read my story ' + ARW + '</a><a class="btn" href="journey.html">See my journey ' + ARW + '</a></div></div></div>'
+      '<div class="wrap ab-hero-bar"><ul>'
+      '<li><b>Turkey</b><small>Grew up on the south coast</small></li><li><b>Austria</b><small>Home base since 2011</small></li>'
+      '<li><b>Rio 2016</b><small>Olympic internship</small></li><li><b>COP24</b><small>Reached by train</small></li></ul></div></section>'
     # manifesto
     + '<section class="ab-manifesto"><div class="wrap"><div class="eyebrow reveal">In a few words</div>'
       '<p class="mf" data-words>I grew up between hotel lobbies and the Mediterranean. Today I chase <em>new challenges</em>, cross borders <em>by train</em>, '
