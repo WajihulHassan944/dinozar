@@ -205,7 +205,7 @@ outlets = ["Kleine Zeitung", "MeinBezirk", "&Ouml;3", "Vi2day", "APA-OTS", "Aust
 
 about_body = (
     '<section class="ab-hero"><div class="ab-hero-bg" aria-hidden="true"></div><div class="ab-hero-ph" role="img" aria-label="Deniz Onaral, arms crossed, smiling"></div><span class="ph-arc" aria-hidden="true"></span><span class="ph-bloom" aria-hidden="true"></span>'
-      '<div class="wrap ab-hero-in"><div class="ab-hero-copy"><p class="crumbs"><a href="index.html">Home</a><i></i><span>About</span></p><div class="eyebrow">About me</div>'
+      '<div class="wrap ab-hero-in"><div class="ab-hero-copy"><div class="eyebrow">About me</div>'
       '<h1><span class="ln"><span>Deniz</span></span></h1><p class="ab-sub">Onaral &nbsp;&middot;&nbsp; <em>the sea</em> in Turkish</p>'
       '<p class="lead">A lateral thinker with affinity to design thinking &mdash; always chasing new challenges, exploring the unknown and pushing boundaries.</p>'
       '<div class="phero-actions"><a class="btn" href="#story">Read my story ' + ARW + '</a><a class="btn" href="journey.html">See my journey ' + ARW + '</a></div></div></div>'
