@@ -686,3 +686,57 @@
 html.menu-open :is(.home, .inner) .menu { background: radial-gradient(120% 90% at 30% 15%, rgba(255,230,205,.25), rgba(232,176,126,.08) 50%) padding-box, rgba(24,20,17,.5) padding-box,
   linear-gradient(150deg, #ffe2c4, rgba(232,176,126,.5) 45%, rgba(240,190,140,.95)) border-box; }
 @media (max-width: 620px) { :is(.home, .inner) .menu { width: 46px; height: 46px; } :is(.home, .inner) .menu i { width: 17px; } }
+
+/* "Let's connect" eyebrow: symmetric rules so the label is truly centred (all sizes) */
+.home .connect .eyebrow::before { content: ""; width: 56px; height: 1px; background: linear-gradient(90deg, rgba(122,122,122,0), #7a7a7a); }
+.home .connect .eyebrow::after { background: linear-gradient(90deg, #7a7a7a, rgba(122,122,122,0)) !important; }
+
+/* ================================================================ Homepage on phones: audit fixes + premium touches */
+@media (max-width: 620px) {
+  /* hero: equal side margins, warm base light, copper hairline */
+  .home .hero h1 { font-size: clamp(36px, 11.8vw, 58px); }
+  .home .hero::before { content: ""; position: absolute; inset: auto 0 0 0; height: 46%; z-index: 2; pointer-events: none;
+    background: radial-gradient(70% 55% at 12% 100%, rgba(226,150,90,.16), transparent 70%),
+                linear-gradient(90deg, transparent 4%, rgba(232,176,126,.55) 35%, rgba(255,255,255,.12) 70%, transparent 96%) bottom / 100% 1px no-repeat; }
+  .home .hero-in { z-index: 3; }
+  .home .watch span.c { border-color: rgba(214,160,112,.6); box-shadow: 0 0 18px rgba(212,150,100,.2), inset 0 0 10px rgba(212,150,100,.1); }
+  .home .watch:active span.c { transform: scale(.94); }
+
+  /* legibility: nothing under 11px */
+  .home .about .eyebrow, .drives .eyebrow, .jr-copy .eyebrow, .home .connect .eyebrow { font-size: 11px !important; }
+  .home .stat small { font-size: 11px; }
+  .drives .dr-proof small { font-size: 11px; }
+  .drives .tech small { font-size: 11.5px; text-wrap: pretty; }
+  .drives .dr-copy p, .home .about p, .jr-copy p { text-wrap: pretty; }
+
+  /* stat tiles: copper top light */
+  .home .stat { background: linear-gradient(90deg, transparent 10%, rgba(240,190,140,.6) 50%, transparent 90%) top / 100% 1px no-repeat,
+    radial-gradient(90% 70% at 50% 0%, rgba(212,160,110,.1), transparent 70%), linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); }
+
+  /* quote marks clear of the screen edges */
+  .home .quote .q { padding-inline: 46px; }
+  .home .quote blockquote::before { left: -.68em; top: -.25em; }
+  .home .quote blockquote::after { right: -.62em; }
+
+  /* tighter rhythm around the journey card */
+  .drives { padding-bottom: 46px !important; }
+  .home #journey.jr-sec { margin-top: 10px; }
+  .home .connect { margin-top: 18px; }
+
+  /* journey card: one "My journey" label, readable caption, 44px arrows */
+  .jr-tag.top { display: none; }
+  .jr-media::after { background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, transparent 30%, transparent 52%, rgba(6,6,6,.85) 100%); }
+  .jr-tag.bottom span { font-size: 10px; color: #e6e6e6; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+  .jr-pager button { width: 44px; height: 44px; }
+  .jr-pager svg { width: 40%; height: 40%; }
+  .jr-dots { display: flex; }
+
+  /* press feedback */
+  .drives .tech:active, .home .stat:active { transform: scale(.97); transition-duration: .15s; }
+  .home .btn:active, .jr-btn:active { transform: scale(.98) !important; }
+
+  /* footer: comfortable tap targets */
+  .home .f-right a { padding-block: 12px; }
+  .home footer .logo-mark, .home .f-left > a { padding: 4px; }
+}
+@media (max-width: 620px) { .home .stats { align-items: stretch; } .home .stat { align-content: start; } }

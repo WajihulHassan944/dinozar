@@ -128,6 +128,11 @@
   jr.querySelector('.jr-next').addEventListener('click',function(){go(cur+1);play()});
   jr.addEventListener('pointerenter',stop); jr.addEventListener('pointerleave',play);
   imgs.forEach(function(im){ if(im.loading==='lazy') im.loading='eager'; });
+  // swipe between photos on touch screens
+  var media=jr.querySelector('.jr-media'), tx=null, ty=0;
+  if(media){ media.addEventListener('touchstart',function(e){ tx=e.touches[0].clientX; ty=e.touches[0].clientY; stop(); },{passive:true});
+    media.addEventListener('touchend',function(e){ if(tx===null) return; var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; tx=null;
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)) go(cur+(dx<0?1:-1)); play(); },{passive:true}); }
   play();
 })();
 (function(){
