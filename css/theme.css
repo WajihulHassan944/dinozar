@@ -571,3 +571,91 @@
   .jr::after { background: radial-gradient(40% 3px at 30% 0, rgba(255,214,170,.9), transparent 70%), radial-gradient(40% 3px at 70% 100%, rgba(255,214,170,.8), transparent 70%); }
 }
 @media (prefers-reduced-motion: reduce) { .jr-compass { animation: none; } .jr-img { transition: opacity .3s; } }
+
+/* ================================================================ Homepage on phones (premium pass) */
+@media (max-width: 620px) {
+  /* hero: whole face framed at the top, copy anchored below */
+  .home .hero { height: 100svh; min-height: 640px; align-items: flex-end; padding-block: 0 44px; }
+  .home .portrait { background-size: auto 66%; background-position: 96% 0; }
+  .home .hero::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(0deg, #050505 0%, #050505 30%, rgba(5,5,5,.82) 42%, rgba(5,5,5,.25) 58%, rgba(5,5,5,0) 70%),
+                linear-gradient(180deg, rgba(5,5,5,.55) 0%, transparent 16%),
+                linear-gradient(90deg, rgba(5,5,5,.6) 0%, transparent 45%); }
+  .home .hero .eyebrow { font-size: 11px; letter-spacing: .46em; gap: 16px; }
+  .home .hero .eyebrow::after { width: 56px; }
+  .home .hero h1 { font-size: clamp(38px, 12.6vw, 60px); line-height: 1.04; margin-top: 20px; }
+  .home .tag { margin-top: 20px; font-size: 13px; letter-spacing: .26em; }
+  .home .watch { margin-top: 30px; gap: 16px; font-size: 14px; }
+  .home .watch span.c { width: 52px; height: 52px; }
+
+  /* about */
+  .home .about { padding-block: 56px 50px; }
+  .home .about-grid { row-gap: 34px; }
+  .home .frame { margin: 0 34px 0 38px; }
+  .home .about .eyebrow { font-size: 10.5px; }
+  .home .about .eyebrow::after { width: 90px; }
+  .home .about h2 { font-size: 56px; margin: 16px 0 16px; }
+  .home .about p { font-size: 15.5px; line-height: 1.7; max-width: none; margin-bottom: 26px; }
+  .home .about .btn { width: 100%; justify-content: space-between; }
+  .home .stats { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 10px; padding-top: 26px; }
+  .home .stat { grid-template-columns: 1fr !important; justify-items: center; text-align: center; gap: 12px; padding: 18px 6px 16px; border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.08); background: linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); }
+  .home .stat:hover { transform: none; }
+  .home .stat::before { display: none; }
+  .home .stat .ring { width: 44px; height: 44px; }
+  .home .stat svg { width: 22px; height: 22px; }
+  .home .stat b { font-size: 30px; }
+  .home .stat small { font-size: 10px; letter-spacing: .04em; white-space: normal; line-height: 1.35; margin-top: 4px; }
+
+  /* quote */
+  .home .quote { min-height: 0; padding-block: 54px; }
+  .home .quote .q { padding-inline: 34px; }
+  .home .quote blockquote { font-size: 18px; line-height: 1.5; }
+  .home .quote blockquote::before { left: -.75em; top: -.2em; font-size: 2.2em; }
+  .home .quote blockquote::after { right: -.7em; bottom: -.7em; font-size: 2.2em; }
+  .home .quote cite { font-size: 14px; margin-top: 18px; }
+
+  /* what drives me: tighter copy, compact glass cards */
+  .drives { padding-block: 72px 64px !important; }
+  .drives .dr-word { display: none; }
+  .drives h2 { font-size: 44px !important; margin: 18px 0 20px !important; }
+  .drives .dr-copy p { font-size: 15.5px !important; margin-bottom: 26px !important; }
+  .drives .dr-proof { margin-bottom: 30px; }
+  .drives .dr-proof li { padding: 2px 12px; }
+  .drives .dr-proof b { font-size: 22px; }
+  .drives .dr-proof small { font-size: 10.5px; letter-spacing: .02em; }
+  .drives .btn { width: 100%; justify-content: space-between; }
+  .drives .exp-grid { gap: 36px !important; }
+  .drives .techs { gap: 10px !important; }
+  .drives .tech { padding: 16px 14px 15px; border-radius: 14px; }
+  .drives .tech i { width: 40px !important; height: 40px !important; margin-bottom: 14px; }
+  .drives .tech svg { width: 20px !important; height: 20px !important; }
+  .drives .tech b { font-size: 17px; }
+  .drives .tech small { font-size: 11px; margin-top: 4px; }
+
+  /* journey card */
+  .home #journey.jr-sec { margin-top: 24px; }
+  .jr { border-radius: 18px; }
+  .jr-compass { display: none; }
+  .jr-media { height: 72cqw; }
+  .jr-copy { padding: 14px 22px 0; }
+  .jr-copy h2 { font-size: 38px; }
+  .jr-copy p { font-size: 15px; line-height: 1.65; }
+  .jr-btn { width: 100%; justify-content: space-between; }
+  .jr-pager { justify-content: space-between; padding: 22px 22px 24px; }
+  .jr-pager > i { flex: 1; }
+
+  /* connect band */
+  .home .connect { min-height: 0; }
+  .home .connect .c { padding: 72px 24px 66px; }
+  .home .connect h2 { font-size: 36px; line-height: 1.1; }
+  .home .connect p { font-size: 15px; max-width: 290px; margin-inline: auto; }
+
+  /* footer: centred, balanced */
+  .home footer { padding-bottom: 34px; }
+  .home footer .wrap { flex-direction: column; align-items: center; text-align: center; gap: 22px; padding-top: 34px; }
+  .home .f-left { flex-direction: column; gap: 14px; }
+  .home .f-left small { font-size: 11.5px; line-height: 1.6; max-width: 260px; }
+  .home .f-right { font-size: 13px; }
+  .home .f-right a, .home .f-right a:first-child { padding-inline: 22px; }
+}
