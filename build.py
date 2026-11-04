@@ -304,25 +304,47 @@ page("journey.html", "Journey – Dex World", journey_body, active="journey.html
      desc="The route so far: Turkey, Austria, the Baltic Sea, Rio 2016, Katowice and beyond.")
 
 # ---------------------------------------------------------------- GALLERY
+# (file, title, place/note, category, tile size: big | wide | tall | "")
 gallery = [
-    ("ship.jpg", "The Deck", "Sea", "Sea"), ("g-sunset.jpg", "Last Light", "Landscapes", "Landscapes"),
-    ("g-peaks.jpg", "Above the Weather", "Landscapes", "Landscapes"), ("g-tanker.jpg", "Golden Hour at Sea", "Sea", "Sea"),
-    ("portrait.jpg", "Deniz", "People", "People"), ("g-clouds.jpg", "Sea of Clouds", "Landscapes", "Landscapes"),
-    ("g-harbor.jpg", "Harbour Evening", "Sea", "Sea"), ("g-summit.jpg", "The Summit", "People", "People"),
-    ("g-fog.jpg", "Fog Valley", "Landscapes", "Landscapes"), ("journey.jpg", "Red Deck, Last Light", "Sea", "Sea"),
-    ("g-mist.jpg", "Edge of Mist", "People", "People")]
-gal_items = "".join('<button class="g reveal" data-cat="%s" aria-label="Open %s"><img loading="lazy" src="images/%s" alt="%s"><figcaption><b>%s</b><small>%s</small></figcaption></button>'
-                    % (c, t, f, t, t, s) for (f, t, s, c) in gallery)
+    ("ship-hd.jpg", "The Deck", "Leaving the bay", "Sea", "big"),
+    ("g-sunset.jpg", "Last Light", "Ridge at dusk", "Landscapes", "wide"),
+    ("portrait.jpg", "Deniz", "Self portrait", "People", "tall"),
+    ("g-peaks.jpg", "Above the Weather", "Alpine peaks", "Landscapes", ""),
+    ("g-clouds.jpg", "Sea of Clouds", "First light", "Landscapes", "wide"),
+    ("g-tanker.jpg", "Golden Hour at Sea", "Open water", "Sea", ""),
+    ("g-summit.jpg", "The Summit", "Above the valley", "People", "tall"),
+    ("g-harbor.jpg", "Harbour Evening", "Blue hour", "Sea", "big"),
+    ("g-fog.jpg", "Fog Valley", "Forest in cloud", "Landscapes", ""),
+    ("g-mist.jpg", "Edge of Mist", "Waiting for the view", "People", "")]
+cats = ["Landscapes", "Sea", "People"]
+gal_items = "".join(
+    '<button class="g %s reveal" style="--d:%.2fs" data-cat="%s" aria-label="Open %s"><img loading="lazy" src="images/%s" alt="%s &ndash; %s">'
+    '<span class="g-no">No. %02d</span><figcaption><small>%s</small><b>%s</b><span>%s</span></figcaption></button>'
+    % (size, (i % 4) * .06, c, t, f, t, note, i + 1, c, t, note) for i, (f, t, note, c, size) in enumerate(gallery))
+chips = ('<div class="gfilter reveal" role="tablist" aria-label="Filter photos"><span class="gf-ind" aria-hidden="true"></span>'
+         '<button class="chip on" data-gcat="all" role="tab">All <i>%d</i></button>' % len(gallery)
+         + "".join('<button class="chip" data-gcat="%s" role="tab">%s <i>%d</i></button>' % (c, c, sum(1 for g in gallery if g[3] == c)) for c in cats) + '</div>')
+lens = [("01", "Chasing light", "Golden hour, blue hour, the minute after the storm &mdash; light decides when the camera comes out.",
+         '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>'),
+        ("02", "Patience over pixels", "Waiting for the fog to lift or the ship to turn matters more than any lens in the bag.",
+         '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/>'),
+        ("03", "Every frame a story", "Each photo belongs to a chapter of the journey &mdash; a place, a person, a moment worth keeping.",
+         '<path d="M4 6.5h4l1.5-2h5l1.5 2h4v12H4z"/><circle cx="12" cy="12.5" r="3.5"/>')]
+lens_html = "".join('<article class="val reveal" style="--d:%ss"><span class="val-n">%s</span><i><svg viewBox="0 0 24 24">%s</svg></i><h3>%s</h3><p>%s</p></article>'
+                    % (i * .12, n, ic, t, d) for i, (n, t, d, ic) in enumerate(lens))
+thumbs = "".join('<button class="lb-t" aria-label="Show %s"><img src="images/%s" alt="" loading="lazy"></button>' % (t, f) for (f, t, *_r) in gallery)
 gallery_body = (phero("Gallery", "Through <em>my lens</em>", "Landscapes, seascapes and people &mdash; captured on the road. Hover to bring back the colour, click to open.", "Gallery")
-                + '<section class="sec"><div class="wrap"><div class="chips" style="margin:0 0 40px">'
-                '<button class="chip on" data-gcat="all">All</button><button class="chip" data-gcat="Landscapes">Landscapes</button>'
-                '<button class="chip" data-gcat="Sea">Sea</button><button class="chip" data-gcat="People">People</button></div>'
-                '<div class="gal">' + gal_items + '</div></div></section>'
-                + '<div id="lb" aria-hidden="true" role="dialog" aria-label="Photo viewer"><button class="x" aria-label="Close">&times;</button>'
-                '<button class="pv" aria-label="Previous">&larr;</button><button class="nx" aria-label="Next">&rarr;</button>'
-                '<figure><img alt=""><figcaption><b></b><small></small></figcaption></figure></div>'
-                + connect_html("Like what you see?", "Let&rsquo;s tell the next story together.", "Get in Touch"))
-page("gallery.html", "Gallery – Dex World", gallery_body, active="gallery.html", desc="Photo gallery: landscapes, seascapes and people.")
+    + '<section class="sec gal-sec"><div class="wrap"><div class="gal-head reveal"><div><div class="eyebrow">The collection</div>'
+      '<h2>Moments worth <em>keeping</em></h2></div><p class="gal-meta"><b>%d</b> frames <i></i> <b>3</b> themes <i></i> <b>2011&ndash;2019</b></p></div>' % len(gallery)
+    + chips + '<div class="gal">' + gal_items + '</div></div></section>'
+    + '<section class="sec gal-lens"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">Behind the lens</div><h2>How the pictures happen</h2></div>'
+      '<div class="vals">' + lens_html + '</div></div></section>'
+    + '<div id="lb" aria-hidden="true" role="dialog" aria-label="Photo viewer"><div class="lb-bg" aria-hidden="true"><img alt=""></div>'
+      '<button class="x" aria-label="Close">&times;</button><button class="pv" aria-label="Previous">&larr;</button><button class="nx" aria-label="Next">&rarr;</button>'
+      '<figure><div class="lb-img"><img alt=""></div><figcaption><span class="lb-c"><b class="lb-i">01</b> / <span class="lb-n">10</span></span><b class="lb-ttl"></b><small></small></figcaption></figure>'
+      '<div class="lb-thumbs">' + thumbs + '</div></div>'
+    + connect_html("Like what you see?", "Let&rsquo;s tell the next story together.", "Get in Touch"))
+page("gallery.html", "Gallery – Dex World", gallery_body, active="gallery.html", body_class="inner page-gallery", desc="Photo gallery: landscapes, seascapes and people.")
 
 # ---------------------------------------------------------------- PRESS
 press = [
