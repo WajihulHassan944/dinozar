@@ -122,6 +122,37 @@
 .home .menu { border-color: rgba(255,255,255,.6); box-shadow: 0 0 16px rgba(255,255,255,.08), inset 0 0 10px rgba(255,255,255,.06); }
 .home .menu i { height: 1.5px; }
 
+/* Hero v3: background is the hero design itself (text removed, 2x upscaled: images/hero-bg.jpg).
+   It carries the portrait with hair, glass halo, silver ring, copper arc and all the light and shadow,
+   so every drawn effect is switched off and only the live text sits on top. */
+.home .hero { background: #050505; }
+.home header .wrap, .home .hero .wrap { max-width: 1221px; }
+.home .hero::before, .home .hero::after { content: none; }
+.home .arc, .home .bloom { display: none !important; }
+.home .portrait { inset: 0; left: 0; right: 0; top: 0; bottom: 0; width: auto; height: auto;
+  background-size: cover; background-position: 32% 50%; background-repeat: no-repeat;
+  -webkit-mask-image: none; mask-image: none; transform: none !important; }
+.home .hero-copy { transform: none; }
+.home .hero .eyebrow { font-size: 12.5px; letter-spacing: .5em; color: #c9c9c9; gap: 20px; }
+.home .hero .eyebrow::after { width: 84px; background: rgba(200,200,200,.45); }
+.home .hero h1 .ln:nth-of-type(1) > span { background: linear-gradient(180deg, #f4f4f4 15%, #bdbdbd 100%); -webkit-background-clip: text; background-clip: text; }
+.home .hero h1 em { background: linear-gradient(100deg, #dcae8a 0%, #c78e68 55%, #a9714f 100%); -webkit-background-clip: text; background-clip: text; filter: none; }
+.home .tag { color: #cfcfcf; letter-spacing: .3em; }
+.home .watch span.c { width: 58px; height: 58px; border: 1px solid rgba(255,255,255,.16); background: rgba(10,10,10,.35); box-shadow: none; }
+.home .watch svg { width: 12px; height: 13px; fill: #d48b5b; }
+.home .watch:hover span.c { border-color: var(--copper); }
+/* header over the design: no dark band, glassy hamburger */
+.home .nav li a { font-weight: 400; font-size: 12px; letter-spacing: .3em; color: #e6e6e6; }
+.home .nav li a.on { color: #d79a6c; text-shadow: none; }
+.home .nav li a.on::after { height: 1.5px; background: #c98e62; box-shadow: none; }
+:is(.home, .inner) .menu { width: 42px; height: 42px; gap: 4px; border: 1.5px solid rgba(255,255,255,.62);
+  background: radial-gradient(circle at 35% 25%, rgba(255,255,255,.16), rgba(255,255,255,.04) 55%, rgba(255,255,255,.02));
+  -webkit-backdrop-filter: blur(8px) saturate(1.2); backdrop-filter: blur(8px) saturate(1.2);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.22), inset 0 -6px 12px rgba(0,0,0,.35), 0 4px 14px rgba(0,0,0,.45); }
+:is(.home, .inner) .menu i { width: 15px; height: 2px; border-radius: 1px; background: #f1f1f1; }
+:is(.home, .inner) .menu:hover { border-color: var(--copper); background: radial-gradient(circle at 35% 25%, rgba(212,176,140,.28), rgba(212,176,140,.06) 60%); }
+:is(.home, .inner) .menu:hover i { width: 17px; }
+
 /* ---------------------------------------------------------------- About */
 .home .about { position: relative; padding-block: 60px 28px;
   background: radial-gradient(ellipse 55% 110% at 28% 45%, #151515 0%, #0e0e0e 60%, #0b0b0b 100%); }
@@ -377,4 +408,11 @@
   :is(.home, .inner) .tech i { width: 58px; height: 58px; }
   .home .stats { grid-template-columns: minmax(0, 1fr); }
   .home .stat { grid-template-columns: 48px 1fr; }
+}
+
+/* Hero v3 on phones: keep the face in view and darken under the copy */
+@media (max-width: 880px) {
+  .home .portrait { background-position: 74% 50%; opacity: 1; }
+  .home .hero::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(0deg, rgba(5,5,5,.95) 6%, rgba(5,5,5,.7) 42%, rgba(5,5,5,0) 72%); }
 }
