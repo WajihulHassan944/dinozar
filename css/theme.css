@@ -140,13 +140,13 @@
 /* frosted-glass frames behind the photo: gradient copper edge (bright corners, fading sides) */
 .home .frame::before, .home .frame::after { transform: translateZ(-30px); border: 1px solid transparent; -webkit-mask-image: none; mask-image: none; opacity: 1;
   -webkit-backdrop-filter: blur(10px) saturate(1.1); backdrop-filter: blur(10px) saturate(1.1); }
-.home .frame::before { inset: 32px -36px 65px 40%; border-radius: 13px;
+.home .frame::before { inset: 32px -40px 65px 40%; border-radius: 13px;
   background:
     linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012) 45%, rgba(255,255,255,.025)) padding-box,
     linear-gradient(160deg, rgba(19,19,19,.92), rgba(11,11,11,.92)) padding-box,
     linear-gradient(180deg, rgba(250,196,146,1) 0%, rgba(214,160,114,.55) 22%, rgba(206,152,108,.38) 55%, rgba(226,170,122,.7) 85%, rgba(250,196,146,.95) 100%) border-box;
   box-shadow: 0 0 22px rgba(212,150,100,.1), inset 0 1px 0 rgba(255,255,255,.06), inset 0 0 24px rgba(255,255,255,.025); }
-.home .frame::after { left: -43px; top: 60px; bottom: 27px; width: 90px; border-right: 0; border-radius: 13px 0 0 13px;
+.home .frame::after { left: -40px; top: 60px; bottom: 27px; width: 90px; border-right: 0; border-radius: 13px 0 0 13px;
   background:
     linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012) 45%, rgba(255,255,255,.025)) padding-box,
     linear-gradient(160deg, rgba(19,19,19,.92), rgba(11,11,11,.92)) padding-box,
@@ -304,7 +304,7 @@
   .home .stat .ring { width: 46px; height: 46px; }
   .home .stat b { font-size: 34px; }
   .home .stat small { font-size: 12.5px; }
-  .home .frame { margin: 0 33px 0 41px; }
+  .home .frame { margin: 0 40px; }
   .home .stats { padding: 26px 0 0; gap: 20px; }
   .home .stats::before { left: 0; right: 0; top: 0; bottom: auto; width: auto; height: 1px; background: linear-gradient(90deg, rgba(220,200,180,.42), rgba(255,255,255,.05)); }
   .home .stat { grid-template-columns: 1fr; gap: 10px; }
