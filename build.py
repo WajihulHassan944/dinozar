@@ -165,7 +165,7 @@ page("index.html", HOME_TITLE, home, active="index.html", loader=True, css=None,
      desc=HOME_DESC, head_extra=HOME_HEAD)
 
 # expertise block reused on the About page
-m = re.search(r'<section class="expertise" id="expertise">.*?</section>', home, re.S)
+m = re.search(r'<section class="expertise[^"]*" id="expertise">.*?</section>', home, re.S)
 expertise = m.group(0) if m else ""
 
 

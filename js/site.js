@@ -107,3 +107,11 @@
     ws.forEach(function(w,i){ w.classList.toggle('on', i<n); }); }
   addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(upd)} },{passive:true}); upd();
 })();
+(function(){
+  // cursor spotlight on the "What drives me" cards
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  [].forEach.call(document.querySelectorAll('.drives .tech'),function(c){
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();
+      c.style.setProperty('--x',(e.clientX-r.left)+'px');c.style.setProperty('--y',(e.clientY-r.top)+'px');});
+  });
+})();
