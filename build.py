@@ -77,7 +77,7 @@ def page(fname, title, body, active=None, desc="", loader=False, data=False, css
             '<title>%s</title>\n<meta name="description" content="%s">\n<meta name="theme-color" content="#0a0a0a">\n'
             '<link rel="icon" href="images/favicon.png">\n'
             '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-            '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap">\n'
+            '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Trirong:wght@200;300&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap">\n'
             '<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css"><link rel="stylesheet" href="css/theme.css">%s\n'
             '</head>\n<body%s>\n<script>document.documentElement.classList.add(%s)</script>\n%s\n'
             '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
