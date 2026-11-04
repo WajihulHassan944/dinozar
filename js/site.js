@@ -45,7 +45,8 @@
     sc.src='https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js';
     sc.onload=function(){
       if(!window.Lenis) return;
-      lenis=new Lenis({duration:1.2,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
+      lenis=new Lenis({duration:1.2,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true,
+        prevent:function(n){return n.id==='mo'||n.id==='lb'}});
       window.__lenis=lenis;
       if(!started||document.documentElement.classList.contains('menu-open')) lenis.stop();
       (function raf(t){lenis.raf(t);requestAnimationFrame(raf)})(performance.now());

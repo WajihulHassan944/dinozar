@@ -43,7 +43,7 @@ def overlay_html():
         if subs:
             sub = '<ul class="mo-sub">%s</ul>' % "".join('<li><a href="%s">%s</a></li>' % (h, t) for t, h in subs)
         lis.append('<li style="--i:%d"><a href="%s">%s</a>%s</li>' % (i, f, n, sub))
-    return ('<div id="mo" aria-hidden="true"><div class="wrap mo-in">'
+    return ('<div id="mo" aria-hidden="true" data-lenis-prevent><div class="wrap mo-in">'
             '<nav aria-label="Full menu"><ol class="mo-list">%s</ol></nav>'
             '<aside class="mo-side">'
             '<div><h4>Say hello</h4><p>Want to chat? Ask a question?<br><a href="contact.html">Send a message &rarr;</a></p></div>'
@@ -358,7 +358,7 @@ gallery_body = (phero("Gallery", "Through <em>my lens</em>", "Landscapes, seasca
     + chips + '<div class="gal">' + gal_items + '</div></div></section>'
     + '<section class="sec gal-lens"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">Behind the lens</div><h2>How the pictures happen</h2></div>'
       '<div class="vals">' + lens_html + '</div></div></section>'
-    + '<div id="lb" aria-hidden="true" role="dialog" aria-label="Photo viewer"><div class="lb-bg" aria-hidden="true"><img alt=""></div>'
+    + '<div id="lb" aria-hidden="true" role="dialog" aria-label="Photo viewer" data-lenis-prevent><div class="lb-bg" aria-hidden="true"><img alt=""></div>'
       '<button class="x" aria-label="Close">&times;</button><button class="pv" aria-label="Previous">&larr;</button><button class="nx" aria-label="Next">&rarr;</button>'
       '<figure><div class="lb-img"><img alt=""></div><figcaption><span class="lb-c"><b class="lb-i">01</b> / <span class="lb-n">10</span></span><b class="lb-ttl"></b><small></small></figcaption></figure>'
       '<div class="lb-thumbs">' + thumbs + '</div></div>'
