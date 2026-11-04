@@ -106,7 +106,7 @@ def phero(eyebrow, title, lead, crumb, img=None, actions=""):
 
 
 # ---------------------------------------------------------------- HOME SEO / social preview
-SITE_URL = "https://dinozar.wtf"   # change if the site is published elsewhere
+SITE_URL = "https://dinozar.vercel.app"   # live domain; change if the site moves
 HOME_TITLE = "Dex World by Deniz Onaral | Travel & Sustainability Journal"
 HOME_DESC = ("Dream. Explore. Xperate. The travel and sustainability journal of Deniz Onaral – Rio 2016 Olympics, "
              "COP24 by train, hospitality and design thinking.")

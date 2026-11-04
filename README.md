@@ -14,4 +14,4 @@ Static, multi-page site (HTML/CSS/JS, no build step needed to view).
 
 - Head tags, Open Graph / Twitter card and JSON-LD are generated from `HOME_TITLE`, `HOME_DESC`, `OG_*` and `SITE_URL` in `build.py`.
 - Share image: `images/og-home.jpg` (1200x630, ~70 KB). Social apps need absolute URLs, so set `SITE_URL` to the live domain before publishing.
-- `robots.txt` and `sitemap.xml` assume `https://dinozar.wtf`.
+- `robots.txt` and `sitemap.xml` use `https://dinozar.vercel.app`.

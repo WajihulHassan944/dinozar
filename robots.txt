@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dinozar.wtf/sitemap.xml
+Sitemap: https://dinozar.vercel.app/sitemap.xml
