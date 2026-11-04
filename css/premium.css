@@ -773,3 +773,65 @@ html.ready .page-about .ab-hero-bar { animation: rise 1s .95s cubic-bezier(.2,.8
   .inner .f-right { font-size: 13px; }
   .inner .f-right a, .inner .f-right a:first-child { padding: 12px 18px; }
 }
+
+/* ================================================================ Inner pages on phones: audit fixes (journey, gallery, contact) */
+@media (max-width: 620px) {
+  /* shared page hero */
+  .inner .phero { min-height: 0; padding-top: 128px; padding-bottom: 56px; }
+  .inner .phero .pimg { opacity: .78; }
+  .inner .phero .pimg::after { background: linear-gradient(180deg, rgba(5,5,5,.35) 0%, rgba(5,5,5,.15) 25%, rgba(5,5,5,.78) 62%, #050505 96%); }
+  .inner .phero h1 { font-size: clamp(44px, 12.4vw, 56px); line-height: 1; }
+  .inner .phero .lead { font-size: 15px; line-height: 1.7; }
+  .inner .phero .phero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+  .inner .phero .phero-actions .btn { justify-content: space-between; padding: 13px 16px; font-size: 13px; }
+  .inner .phero .crumbs { font-size: 11px; color: #cfcfcf; text-shadow: 0 1px 10px rgba(0,0,0,.9); }
+  .inner .phero .crumbs a { color: #e2e2e2; }
+
+  /* journey: readable map key with real tap targets */
+  .page-journey .route-key { grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+  .page-journey .route-key a { display: grid; grid-template-columns: 26px 1fr; align-items: center; column-gap: 10px; min-height: 46px; line-height: 1.15; }
+  .page-journey .route-key i { grid-row: span 2; width: 24px; height: 24px; font-size: 11px; }
+  .page-journey .route-key small { display: block; font-size: 10.5px; letter-spacing: .14em; margin-top: 2px; }
+  .page-journey .pin i { width: 22px; height: 22px; font-size: 10px; }
+  .page-journey .jn-facts small { font-size: 10.5px; letter-spacing: .14em; }
+  /* chapter numeral moves to the right as a quiet watermark */
+  .page-journey .ch-n { left: auto; right: 0; top: -.5em; font-size: 84px; -webkit-text-stroke-color: rgba(232,176,126,.16); }
+  .page-journey .ch-meta { position: relative; font-size: 11px; }
+  .page-journey .ch h3 { font-size: 34px; }
+  .page-journey .ch p { font-size: 15.5px; }
+  /* quote band */
+  .page-journey .jn-quote { height: auto; padding-block: 54px; }
+  .page-journey .jn-quote .q { padding-inline: 46px; }
+  .page-journey .jn-quote blockquote { font-size: 19px; }
+  .page-journey .jn-quote blockquote::before { left: -.7em; top: -.25em; font-size: 2.2em; }
+  .page-journey .jn-quote blockquote::after { right: -.62em; font-size: 2.2em; }
+
+  /* gallery: filter as four equal pills, tidy meta */
+  .page-gallery .gfilter { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: visible; width: 100%; }
+  .page-gallery .gfilter .chip { padding: 11px 4px; font-size: 10.5px; letter-spacing: .08em; text-align: center; }
+  .page-gallery .gfilter .chip i { display: none; }
+  .page-gallery .gal-head { gap: 16px; margin-bottom: 26px; }
+  .page-gallery .gal-meta { flex-wrap: wrap; gap: 10px; font-size: 10.5px; letter-spacing: .18em; }
+  .page-gallery .gal-meta b { font-size: 21px; }
+  .page-gallery .g figcaption small { font-size: 10.5px; letter-spacing: .22em; }
+  .page-gallery .g-no { font-size: 13px; }
+  .page-gallery .g::after { background: linear-gradient(180deg, rgba(0,0,0,.2) 0%, transparent 30%, transparent 50%, rgba(6,6,6,.9) 100%); }
+
+  /* contact: compact 2x2 topic cards */
+  .page-contact .ct-topics { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .page-contact .ct-topic { padding: 18px 16px 18px; gap: 4px; }
+  .page-contact .ct-topic i { width: 40px; height: 40px; margin-bottom: 10px; }
+  .page-contact .ct-topic svg { width: 19px; height: 19px; }
+  .page-contact .ct-topic b { font-size: 19px; }
+  .page-contact .ct-topic small { font-size: 12px; }
+  .page-contact .ct-go { right: 14px; top: 20px; }
+  .page-contact .ct-card h4 { font-size: 11px; }
+  .page-contact .ct-panel { padding: 30px 20px; }
+  .page-contact .ct-submit .btn { width: 100%; justify-content: space-between; }
+}
+/* touch screens have no hover: show gallery photos in (soft) colour */
+@media (hover: none) {
+  .page-gallery .g img { filter: grayscale(.15) contrast(1.04) brightness(.92); }
+  .page-gallery .g figcaption span { max-height: 24px; opacity: 1; }
+  .page-gallery .g figcaption::before { width: 40px; }
+}

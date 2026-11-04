@@ -352,7 +352,7 @@ lens = [("01", "Chasing light", "Golden hour, blue hour, the minute after the st
 lens_html = "".join('<article class="val reveal" style="--d:%ss"><span class="val-n">%s</span><i><svg viewBox="0 0 24 24">%s</svg></i><h3>%s</h3><p>%s</p></article>'
                     % (i * .12, n, ic, t, d) for i, (n, t, d, ic) in enumerate(lens))
 thumbs = "".join('<button class="lb-t" aria-label="Show %s"><img src="images/%s" alt="" loading="lazy"></button>' % (t, f) for (f, t, *_r) in gallery)
-gallery_body = (phero("Gallery", "Through <em>my lens</em>", "Landscapes, seascapes and people &mdash; captured on the road. Hover to bring back the colour, click to open.", "Gallery")
+gallery_body = (phero("Gallery", "Through <em>my lens</em>", "Landscapes, seascapes and people &mdash; captured on the road. Open any photo to see it in full colour.", "Gallery")
     + '<section class="sec gal-sec"><div class="wrap"><div class="gal-head reveal"><div><div class="eyebrow">The collection</div>'
       '<h2>Moments worth <em>keeping</em></h2></div><p class="gal-meta"><b>%d</b> frames <i></i> <b>3</b> themes <i></i> <b>2011&ndash;2019</b></p></div>' % len(gallery)
     + chips + '<div class="gal">' + gal_items + '</div></div></section>'
