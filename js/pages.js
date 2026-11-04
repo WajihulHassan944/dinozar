@@ -226,9 +226,20 @@
       + (newer ? '<a class="btn" href="post.html?p=' + newer.slug + '">Newer ' + arrow + '</a>' : '<span></span>');
   }
 
-  /* contact form: front-end validation only; wire it to a back end later */
+  /* contact form: validation, topic chips, counter; sending opens the visitor's email app with the message filled in */
   var cf = $('#cf');
   if (cf) {
+    var topic = $('#topic'), chipsT = $$('.ct-chip', cf), msg = $('#m'), cnt = $('.ct-count b', cf);
+    var pick = function (t) { chipsT.forEach(function (c) { c.classList.toggle('on', c.dataset.topic === t); c.setAttribute('aria-checked', c.dataset.topic === t); }); if (topic) topic.value = t; };
+    chipsT.forEach(function (c) { c.setAttribute('role', 'radio'); c.addEventListener('click', function () { pick(c.dataset.topic); }); });
+    $$('.ct-topic').forEach(function (b) {
+      b.addEventListener('click', function () {
+        pick(b.dataset.topic);
+        var w = $('#write'); if (w) (window.__lenis ? window.__lenis.scrollTo(w, { offset: -40, duration: 1.4 }) : w.scrollIntoView({ behavior: 'smooth' }));
+        setTimeout(function () { var n = $('#n'); if (n) n.focus({ preventScroll: true }); }, 900);
+      });
+    });
+    if (msg && cnt) msg.addEventListener('input', function () { cnt.textContent = msg.value.length; });
     cf.addEventListener('submit', function (e) {
       e.preventDefault();
       var ok = true;
@@ -239,16 +250,32 @@
         if (bad) ok = false;
       });
       var c = $('#consent');
-      c.closest('.chk').style.color = c.checked ? '' : '#d9826e';
+      c.closest('.chk').classList.toggle('err', !c.checked);
       if (!c.checked) ok = false;
-      if (!ok) return;
+      if (!ok) { var first = $('.fld.err input, .fld.err textarea', cf); if (first) first.focus(); return; }
+      var name = $('#n').value.trim(), mail = $('#e').value.trim(), subj = $('#s').value.trim(), t = topic ? topic.value : '';
+      var upd = cf.querySelector('[name=updates]').checked;
+      var subject = '[' + t + '] ' + (subj || 'Message from ' + name);
+      var body = msg.value.trim() + '\n\n—\n' + name + '\n' + mail + '\nTopic: ' + t + (upd ? '\nHappy to receive future updates.' : '');
+      location.href = 'mailto:' + cf.dataset.to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
       cf.hidden = true;
       $('#cf-ok').classList.add('show');
       $('#cf-ok').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
     $$('.fld input,.fld textarea', cf).forEach(function (i) {
-      i.addEventListener('input', function () { i.closest('.fld').classList.remove('err'); });
+      i.addEventListener('input', function () { i.closest('.fld').classList.toggle('err', false); });
     });
+    $('#consent').addEventListener('change', function () { this.closest('.chk').classList.toggle('err', false); });
+  }
+  /* contact page: live local time in Austria */
+  var clk = $('#ct-clock');
+  if (clk && window.Intl) {
+    var tick = function () {
+      try { clk.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Vienna' }).format(new Date()); } catch (e) {}
+      var z = clk.nextElementSibling;
+      if (z) { try { z.textContent = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Vienna', timeZoneName: 'short' }).formatToParts(new Date()).filter(function (p) { return p.type === 'timeZoneName'; })[0].value; } catch (e) {} }
+    };
+    tick(); setInterval(tick, 20000);
   }
 
   /* privacy table of contents highlight */

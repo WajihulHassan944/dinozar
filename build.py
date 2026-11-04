@@ -455,20 +455,60 @@ post_body = ('<section class="phero" style="padding-bottom:50px"><div class="wra
 page("post.html", "Story – Dex World", post_body, data=True, desc="Story template.")
 
 # ---------------------------------------------------------------- CONTACT
-contact_body = (phero("Contact", "Let&rsquo;s <em>talk</em>", "Thank you for visiting my site! Want to chat? Ask a question? Please feel free to contact me &mdash; I read all emails and will do my best to get back to you in a timely manner.", "Contact")
-                + '<section class="sec"><div class="wrap c-grid"><div class="reveal"><form class="cf" id="cf" novalidate action="#" method="post">'
-                '<div class="fld" data-req><label for="n">Your name <em>*</em></label><input id="n" name="name" autocomplete="name"><span class="em">Please tell me your name.</span></div>'
-                '<div class="fld" data-req><label for="e">Your email <em>*</em></label><input id="e" name="email" type="email" autocomplete="email"><span class="em">Please enter a valid email address.</span></div>'
-                '<div class="fld"><label for="s">Subject</label><input id="s" name="subject"></div>'
-                '<div class="fld" data-req><label for="m">Your message <em>*</em></label><textarea id="m" name="message" rows="5"></textarea><span class="em">Write a few words first.</span></div>'
-                '<label class="chk"><input type="checkbox" id="consent" name="consent"><span>I have read and accept the <a href="privacy.html">Privacy Policy</a> and consent to Dex World contacting me about my enquiry.</span></label>'
-                '<label class="chk"><input type="checkbox" name="updates"><span>I give consent to Dex World contacting me with future updates. <em style="color:var(--muted)">(optional)</em></span></label>'
-                '<button class="btn" type="submit">Send message <svg><use href="#arrow"/></svg></button></form>'
-                '<div class="cf-ok" id="cf-ok"><div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h3>Thank you!</h3><p>Your message is on its way &mdash; I&rsquo;ll get back to you soon.</p></div></div>'
-                '<aside class="info reveal"><div class="card"><h4>Say hello</h4><p>Want to chat? Ask a question? Feel free to reach out about projects, stories or collaborations.</p></div>'
-                '<div class="card"><h4>Elsewhere</h4><a class="sl" href="%s" target="_blank" rel="noopener">LinkedIn <span>&#8599;</span></a><a class="sl" href="%s" target="_blank" rel="noopener">Instagram <span>&#8599;</span></a></div>'
-                '<div class="card"><h4>Based in</h4><p>Austria &mdash; and wherever the next adventure leads.</p></div></aside></div></section>' % (LINKEDIN, INSTAGRAM))
-page("contact.html", "Contact – Dex World", contact_body, active="contact.html", desc="Get in touch with Deniz.")
+SVGI = lambda d: '<svg viewBox="0 0 24 24">%s</svg>' % d
+ICO = {
+    "story": SVGI('<path d="M17.5 3.5l3 3L9 18l-4 1 1-4z"/><path d="M15 6l3 3"/>'),
+    "collab": SVGI('<path d="M8 12l3 3 5-6"/><circle cx="12" cy="12" r="9"/>'),
+    "press": SVGI('<path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2M7.5 9h6M7.5 12.5h6M7.5 16h4"/>'),
+    "hi": SVGI('<path d="M4 6.5h16v10H9l-5 4z"/>'),
+    "mail": SVGI('<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6.5L20.5 7"/>'),
+    "in": SVGI('<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5V16M8 7.8v.2M11.5 16v-3.2c0-1.5 1-2.3 2.2-2.3s2 .8 2 2.3V16M11.5 10.5V16"/>'),
+    "ig": SVGI('<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor"/>'),
+    "pin": SVGI('<path d="M12 21s-6.5-6.1-6.5-11a6.5 6.5 0 0 1 13 0c0 4.9-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>'),
+}
+topics = [("story", "Stories &amp; travel", "Tips, routes, questions about a story"), ("collab", "Collaboration", "Projects, design thinking, sustainability"),
+          ("press", "Press &amp; media", "Interviews, quotes and photos"), ("hi", "Just saying hi", "No reason needed")]
+topic_cards = "".join('<button class="ct-topic reveal" type="button" style="--d:%.2fs" data-topic="%s"><i>%s</i><b>%s</b><small>%s</small><span class="ct-go">%s</span></button>'
+                      % (k * .08, re.sub("&amp;", "&", t), ICO[key], t, d, ARW) for k, (key, t, d) in enumerate(topics))
+chips = "".join('<button type="button" class="ct-chip%s" data-topic="%s">%s</button>' % (" on" if k == 0 else "", re.sub("&amp;", "&", t), t) for k, (key, t, d) in enumerate(topics))
+fld = lambda i, name, label, typ="text", req=True, err="", auto="": (
+    '<div class="fld fl"%s><input id="%s" name="%s" type="%s" placeholder=" "%s><label for="%s">%s%s</label>%s</div>'
+    % (" data-req" if req else "", i, name, typ, (' autocomplete="%s"' % auto) if auto else "", i, label, " <em>*</em>" if req else "",
+       ('<span class="em">%s</span>' % err) if err else ""))
+contact_body = (phero("Contact", "Let&rsquo;s <em>talk</em>", "Thank you for visiting my site! Want to chat? Ask a question? Please feel free to contact me &mdash; I read all emails and will do my best to get back to you in a timely manner.", "Contact",
+                      actions='<a class="btn" href="#write">Write a message ' + ARW + '</a><a class="btn" href="%s" target="_blank" rel="noopener">LinkedIn ' % LINKEDIN + ARW + '</a>')
+    # topics
+    + '<section class="sec ct-topics-sec"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">What&rsquo;s on your mind?</div><h2>Pick a reason, <em>any reason</em></h2></div>'
+      '<div class="ct-topics">' + topic_cards + '</div></div></section>'
+    # form + side
+    + '<section class="sec ct-main" id="write"><div class="wrap ct-grid">'
+      '<div class="ct-panel reveal"><div class="ct-panel-head"><div class="eyebrow">Write to me</div><h2>Send a message</h2>'
+      '<p>Fields marked <em>*</em> are required. Sending opens your email app with everything filled in.</p></div>'
+      '<form class="cf" id="cf" novalidate action="mailto:%s" method="post" data-to="%s">' % (EMAIL, EMAIL)
+    + '<div class="ct-chips" role="radiogroup" aria-label="Topic">' + chips + '</div><input type="hidden" id="topic" name="topic" value="Stories &amp; travel">'
+      '<div class="ct-row">' + fld("n", "name", "Your name", err="Please tell me your name.", auto="name")
+      + fld("e", "email", "Your email", "email", err="Please enter a valid email address.", auto="email") + '</div>'
+      + fld("s", "subject", "Subject", req=False)
+      + '<div class="fld fl" data-req><textarea id="m" name="message" rows="5" maxlength="1500" placeholder=" "></textarea><label for="m">Your message <em>*</em></label>'
+        '<span class="em">Write a few words first.</span><span class="ct-count"><b>0</b> / 1500</span></div>'
+        '<label class="chk"><input type="checkbox" id="consent" name="consent"><span>I have read and accept the <a href="privacy.html">Privacy Policy</a> and consent to Dex World contacting me about my enquiry.</span></label>'
+        '<label class="chk"><input type="checkbox" name="updates"><span>I give consent to Dex World contacting me with future updates. <em style="color:var(--muted)">(optional)</em></span></label>'
+        '<div class="ct-submit"><button class="btn" type="submit">Send message ' + ARW + '</button><small>Usually replies within a few days</small></div></form>'
+        '<div class="cf-ok" id="cf-ok"><div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h3>Almost there!</h3>'
+        '<p>Your email app should have opened with the message ready &mdash; just press send. Nothing opened? Write to <a href="mailto:%s">%s</a>.</p></div></div>' % (EMAIL, EMAIL)
+    + '<aside class="ct-side reveal"><div class="ct-card ct-me"><div class="ct-ph"><img src="images/portrait.jpg" alt="Deniz Onaral"></div>'
+      '<div class="ct-me-tx"><b>Deniz Onaral</b><small>Traveller &middot; lateral thinker</small><span class="ct-status"><i></i>Open to messages</span></div></div>'
+      '<div class="ct-card"><h4>Direct</h4>'
+      '<a class="ct-ch" href="mailto:%s"><i>%s</i><span><b>Email</b><small>%s</small></span><em>&#8599;</em></a>' % (EMAIL, ICO["mail"], EMAIL)
+    + '<a class="ct-ch" href="%s" target="_blank" rel="noopener"><i>%s</i><span><b>LinkedIn</b><small>Deniz Onaral</small></span><em>&#8599;</em></a>' % (LINKEDIN, ICO["in"])
+    + '<a class="ct-ch" href="%s" target="_blank" rel="noopener"><i>%s</i><span><b>Instagram</b><small>@d.xaral</small></span><em>&#8599;</em></a></div>' % (INSTAGRAM, ICO["ig"])
+    + '<div class="ct-card ct-where"><i>%s</i><div><h4>Based in</h4><p>Austria &mdash; and wherever the next adventure leads.</p>'
+      '<p class="ct-time">Local time <b id="ct-clock">--:--</b> <small>CET</small></p></div></div></aside></div></section>' % ICO["pin"]
+    # closing band
+    + '<section class="ab-name ct-band"><img class="m" src="images/g-harbor.jpg" alt="" aria-hidden="true"><div class="wrap"><div class="ct-band-tx reveal">'
+      '<div class="eyebrow">Deniz means &lsquo;sea&rsquo;</div><h2>Messages in a bottle<br><em>always welcome.</em></h2>'
+      '<a class="btn" href="#write">Start writing ' + ARW + '</a></div></div></section>')
+page("contact.html", "Contact – Dex World", contact_body, active="contact.html", body_class="inner page-contact", desc="Get in touch with Deniz.")
 
 # ---------------------------------------------------------------- PRIVACY
 legal = [
