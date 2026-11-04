@@ -417,74 +417,70 @@
     background: linear-gradient(0deg, rgba(5,5,5,.95) 6%, rgba(5,5,5,.7) 42%, rgba(5,5,5,0) 72%); }
 }
 
-/* ================================================================ "What drives me" (matches the section design)
-   Background = the design itself with its text and cards removed (images/drives-bg.jpg, 1672x941 @2x).
-   Everything is sized in vw against the design's 1672px frame, so the live layer stays on the artwork. */
-.drives { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center;
-  min-height: 56.28vw; padding: 0 !important; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
-  background: #0a0908 url(../images/drives-bg.jpg) center / cover no-repeat !important; }
-.drives::before, .drives::after { content: none !important; }
-.drives .dr-in { width: 100%; display: grid; grid-template-columns: 39.2vw 50.6vw; justify-content: space-between; align-items: center;
-  padding: 2.6vw 4.43vw 0 5.74vw; }
-/* copy */
-.drives .eyebrow { color: #ececec !important; font-size: max(11px, .93vw) !important; letter-spacing: .44em !important; font-weight: 400; gap: 1.4vw !important; }
-.drives .eyebrow::after { width: 7.8vw !important; height: 1px; background: linear-gradient(90deg, rgba(232,176,126,.95), rgba(232,176,126,.15)) !important; box-shadow: 0 0 6px rgba(232,176,126,.6); }
-.drives h2 { font-family: var(--font-display); font-weight: 500 !important; font-size: max(44px, 5.9vw) !important; line-height: .9 !important; letter-spacing: -.01em;
-  margin: 1.6vw 0 2.2vw !important; color: #f6f6f6; text-shadow: 0 2px 30px rgba(0,0,0,.6); }
-.drives h2 em { font-style: italic; font-weight: 400; background: linear-gradient(100deg, #f0c9a2 0%, #d9a173 50%, #b17a52 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: .06em; }
-.drives .dr-copy p { position: relative; margin: 0 0 3vw !important; padding-left: 1.75vw; max-width: 35vw !important; font-size: max(15px, 1.33vw) !important; line-height: 1.4 !important; font-weight: 400; color: #e6e6e6 !important; }
-.drives .dr-copy p::before { content: ""; position: absolute; left: 0; top: .2em; bottom: .2em; width: 3px; border-radius: 2px; background: linear-gradient(180deg, #f0c296, #c48a5e); box-shadow: 0 0 8px rgba(226,160,104,.45); }
-.drives .btn { padding: 0 2.6vw 0 2.65vw; height: max(46px, 3.95vw); gap: 2.6vw; font-family: var(--font-display); font-size: max(16px, 1.32vw); font-weight: 500; letter-spacing: 0; border-radius: 2px;
-  border: 1px solid rgba(222,168,120,.9); color: #f4f4f4;
-  background: linear-gradient(90deg, transparent, rgba(255,214,176,.95), transparent) center top / 42% 1px no-repeat,
-              linear-gradient(90deg, transparent, rgba(255,214,176,.85), transparent) center bottom / 42% 1px no-repeat, rgba(8,7,6,.45);
-  box-shadow: 0 -6px 14px -10px rgba(255,196,140,.9), 0 6px 14px -10px rgba(255,196,140,.9), inset 0 0 14px rgba(212,150,100,.06); }
-.drives .btn svg { width: max(16px, 1.25vw); height: 12px; color: #e8ad7e; }
-.drives .btn:hover svg { color: #0a0a0a; }
-/* glass cards */
-.drives .techs { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 1.44vw !important; max-width: none !important; width: 100%; justify-self: stretch !important; perspective: none; }
-.drives .tech { position: relative; overflow: hidden; height: 10.6vw; min-height: 120px; display: grid; justify-items: center; align-content: start; gap: 0;
-  padding: 1.55vw .4vw 0; border-radius: .78vw; text-align: center; color: #f2f2f2; cursor: default;
-  border: 1px solid transparent;
-  background: linear-gradient(90deg, transparent 12%, rgba(255,222,190,.55) 50%, transparent 88%) top / 100% 1px no-repeat padding-box,
-              linear-gradient(170deg, rgba(44,35,28,.7) 0%, rgba(20,17,15,.8) 42%, rgba(9,8,8,.88) 100%) padding-box,
-              linear-gradient(170deg, rgba(248,206,162,.9) 0%, rgba(170,126,88,.45) 30%, rgba(120,90,64,.3) 70%, rgba(196,148,104,.55) 100%) border-box;
-  -webkit-backdrop-filter: blur(10px) saturate(1.15); backdrop-filter: blur(10px) saturate(1.15);
-  box-shadow: 0 14px 34px rgba(0,0,0,.6), 0 -4px 18px -10px rgba(248,200,150,.35), inset 0 1px 0 rgba(255,236,214,.1), inset 0 18px 30px -20px rgba(255,214,176,.18);
-  transition: translate .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s, opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
-.drives .tech::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
-  background: radial-gradient(180px circle at var(--x, 50%) var(--y, 0%), rgba(240,180,124,.22), transparent 60%); }
-.drives .tech::after { content: ""; position: absolute; left: 50%; bottom: 1.1vw; width: 2.6vw; height: 2px; transform: translateX(-50%); border-radius: 2px;
-  background: linear-gradient(90deg, transparent, #f2c497, transparent); box-shadow: 0 0 8px rgba(240,176,116,.8); transition: width .45s cubic-bezier(.2,.8,.2,1); }
-.drives .tech:hover { translate: 0 -6px; box-shadow: 0 24px 50px rgba(0,0,0,.6), 0 0 34px rgba(226,160,104,.2), inset 0 1px 0 rgba(255,236,214,.12), inset 0 16px 30px -18px rgba(255,214,176,.22); }
-.drives .tech:hover::before { opacity: 1; }
-.drives .tech:hover::after { width: 4.6vw; }
-.drives .tech i { width: auto !important; height: auto !important; border: 0 !important; background: none !important; box-shadow: none !important; margin: 0 0 1.5vw; transform: none !important; border-radius: 0 !important; }
-.drives .tech svg { width: max(38px, 3.9vw) !important; height: max(38px, 3.9vw) !important; stroke: #e9b384 !important; stroke-width: 1.5 !important; fill: none;
-  filter: drop-shadow(0 0 5px rgba(232,168,112,.35)) !important; transition: transform .5s cubic-bezier(.2,.8,.2,1), filter .4s; }
-.drives .tech svg [fill="currentColor"] { fill: #e7b07f; }
-.drives .tech:hover svg { transform: translateY(-3px) scale(1.06); filter: drop-shadow(0 0 9px rgba(240,176,116,.7)) !important; }
-.drives .tech b { font-family: var(--font-display); font-weight: 500; font-size: max(14px, 1.25vw); white-space: nowrap; line-height: 1.15; color: #f4f4f4; letter-spacing: -.005em; transition: color .35s; }
-.drives .tech:hover b { color: #f3cfaa; }
+/* ================================================================ "What drives me" (premium) */
+.drives { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(90px, 9vw, 140px) !important;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)) !important;
+  background: #070707 !important; }
+.drives .dr-bg { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%;
+  filter: grayscale(1) sepia(.18) contrast(1.15) brightness(.55); opacity: .7; }
+.drives::before { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    linear-gradient(90deg, #070707 0%, rgba(7,7,7,.92) 30%, rgba(7,7,7,.55) 62%, rgba(7,7,7,.75) 100%),
+    linear-gradient(180deg, #070707 0%, rgba(7,7,7,0) 22%, rgba(7,7,7,0) 78%, #070707 100%); }
+.drives::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 34% 50% at 72% 50%, rgba(212,150,100,.12), transparent 70%),
+    radial-gradient(ellipse 22% 40% at 10% 85%, rgba(255,255,255,.04), transparent 70%),
+    linear-gradient(90deg, transparent 5%, rgba(232,176,126,.45) 40%, rgba(255,255,255,.12) 65%, transparent 95%) top / 100% 1px no-repeat,
+    linear-gradient(90deg, transparent 5%, rgba(255,255,255,.08) 50%, transparent 95%) bottom / 100% 1px no-repeat; }
+.drives .dr-word { position: absolute; z-index: -1; left: -1vw; bottom: -2.4vw; pointer-events: none; font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(120px, 17vw, 270px); line-height: 1; letter-spacing: -.02em; color: transparent; -webkit-text-stroke: 1px rgba(232,176,126,.1); white-space: nowrap; }
+.drives .exp-grid { grid-template-columns: minmax(0, .92fr) minmax(0, 1.6fr) !important; gap: clamp(40px, 5vw, 72px) !important; align-items: center; }
 
-/* below ~1100px the artwork is used as a cover background and the layout stacks */
-@media (max-width: 1100px) {
-  .drives { min-height: 0; padding-block: 90px !important; background-position: 70% 50% !important; }
-  .drives .dr-in { grid-template-columns: minmax(0, 1fr); gap: 50px; padding: 0 max(16px, 5vw); }
-  .drives .dr-copy p { max-width: 560px !important; padding-left: 20px; }
-  .drives .eyebrow::after { width: 80px !important; }
-  .drives h2 { margin: 20px 0 26px !important; }
-  .drives .btn { padding: 0 30px; gap: 30px; }
-  .drives .techs { gap: 14px !important; }
-  .drives .tech { height: auto; min-height: 150px; padding: 26px 8px 34px; border-radius: 12px; }
-  .drives .tech i { margin-bottom: 18px; }
-  .drives .tech svg { width: 44px !important; height: 44px !important; }
-  .drives .tech b { font-size: 17px; white-space: normal; }
-  .drives .tech::after { bottom: 16px; width: 36px; }
-  .drives .tech:hover::after { width: 56px; }
-}
-@media (max-width: 620px) {
-  .drives { padding-block: 70px !important; }
+/* copy */
+.drives .eyebrow { color: #d9a06d !important; font-size: 11.5px; letter-spacing: .42em; }
+.drives .eyebrow::after { width: 90px; background: linear-gradient(90deg, rgba(214,160,112,.8), rgba(214,160,112,.1)) !important; }
+.drives h2 { font-size: clamp(40px, 4.5vw, 66px) !important; line-height: 1.02 !important; margin: 24px 0 26px !important; color: #f4f4f4; }
+.drives h2 em { font-style: italic; font-weight: 300; background: linear-gradient(100deg, #ecc29e 0%, #cf9a70 50%, #a8714b 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(214,150,100,.22)); padding-right: .08em; }
+.drives .dr-copy p { font-size: clamp(15px, 1.2vw, 17.5px) !important; line-height: 1.7 !important; color: #d2d2d2 !important; max-width: 420px !important; margin: 0 0 30px !important; }
+.drives .dr-proof { list-style: none; margin: 0 0 36px; padding: 0; display: flex; max-width: 470px; }
+.drives .dr-proof li { flex: 1; padding: 4px 18px; border-left: 1px solid rgba(214,160,112,.35); }
+.drives .dr-proof li:first-child { padding-left: 0; border-left: 0; }
+.drives .dr-proof b { display: block; font-family: var(--font-display); font-weight: 400; font-size: clamp(24px, 2.2vw, 31px); line-height: 1; color: #f0d2b6; }
+.drives .dr-proof small { display: block; margin-top: 8px; font-size: 11.5px; letter-spacing: .06em; color: #9f9f9f; }
+
+/* glass cards */
+.drives .techs { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 36px 14px !important; max-width: none !important; justify-self: stretch !important; perspective: none; }
+.drives .tech { position: relative; overflow: hidden; display: grid; justify-items: start; align-content: start; gap: 0; padding: 22px 14px 20px; min-height: 176px;
+  border-radius: 16px; border: 1px solid rgba(255,255,255,.09); text-align: left; color: #efefef; cursor: default;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent) top / 100% 1px no-repeat,
+              linear-gradient(160deg, rgba(255,255,255,.065), rgba(255,255,255,.015) 55%, rgba(255,255,255,.03));
+  -webkit-backdrop-filter: blur(14px) saturate(1.15); backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow: 0 18px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+  transition: translate .5s cubic-bezier(.2,.8,.2,1), border-color .4s, box-shadow .5s, opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+.drives .tech::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(220px circle at var(--x, 50%) var(--y, 0%), rgba(232,170,118,.2), transparent 60%); }
+.drives .tech:nth-child(even) { translate: 0 18px; }
+.drives .tech:hover { translate: 0 -6px; border-color: rgba(214,160,112,.55); box-shadow: 0 28px 56px rgba(0,0,0,.55), 0 0 40px rgba(212,150,100,.16), inset 0 1px 0 rgba(255,255,255,.08); }
+.drives .tech:nth-child(even):hover { translate: 0 12px; }
+.drives .tech:hover::before { opacity: 1; }
+.drives .tech i { position: relative; width: 50px !important; height: 50px !important; border-radius: 50% !important; margin-bottom: 26px;
+  border: 1.5px solid rgba(214,160,112,.75) !important; background: radial-gradient(circle, rgba(212,150,100,.12), rgba(10,10,10,.5) 70%) !important;
+  box-shadow: 0 0 16px rgba(212,150,100,.2), inset 0 0 10px rgba(212,150,100,.1) !important; transform: none !important; transition: box-shadow .45s, border-color .35s !important; }
+.drives .tech svg { width: 24px !important; height: 24px !important; stroke: #eab183 !important; stroke-width: 1.4 !important; filter: drop-shadow(0 0 4px rgba(226,164,114,.45)) !important; }
+.drives .tech:hover i { border-color: #f0bd92 !important; box-shadow: 0 0 26px rgba(226,160,104,.5), inset 0 0 14px rgba(226,160,104,.22) !important; }
+.drives .tech b { position: relative; font-family: var(--font-display); font-weight: 400; font-size: clamp(16px, 1.27vw, 19px); letter-spacing: -.005em; line-height: 1.15; color: #f4f4f4; transition: color .35s; }
+.drives .tech:hover b { color: #ecc29e; }
+.drives .tech small { position: relative; margin-top: 8px; font-size: 12px; line-height: 1.45; color: #9a9a9a; transition: color .35s; }
+.drives .tech:hover small { color: #cbb6a3; }
+
+@media (max-width: 1200px) { .drives .exp-grid { grid-template-columns: minmax(0, 1fr) !important; } .drives .dr-copy p { max-width: 560px !important; } .drives .techs { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 14px !important; } .drives .tech:nth-child(even) { translate: none; } .drives .tech:nth-child(even):hover { translate: 0 -6px; } }
+@media (max-width: 880px) {
+  .drives .exp-grid { grid-template-columns: minmax(0, 1fr) !important; }
   .drives .techs { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-  .drives .tech:last-child { grid-column: 1 / -1; }
+  .drives .tech { min-height: 0; padding: 18px 16px; }
+  .drives .tech i { margin-bottom: 18px; }
+  .drives .dr-bg { object-position: 60% 50%; }
+  .drives::before { background: linear-gradient(180deg, #070707 0%, rgba(7,7,7,.75) 30%, rgba(7,7,7,.85) 70%, #070707 100%); }
 }
