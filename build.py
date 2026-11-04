@@ -158,7 +158,7 @@ home = (ROOT / "src/home-main.html").read_text(encoding="utf-8")
 home = (home.replace('href="#journey"><span class="c">', 'href="journey.html"><span class="c">')
             .replace('<a class="btn" href="#journey">Discover More', '<a class="btn" href="about.html">Discover More')
             .replace('href="#stories">Read the Stories', 'href="stories.html">Read the Stories')
-            .replace('href="#gallery">View Gallery', 'href="gallery.html">View Gallery')
+            .replace('class="jr-btn" href="#gallery">View Gallery', 'class="jr-btn" href="gallery.html">View Gallery')
             .replace('href="#contact">Get in Touch', 'href="contact.html">Get in Touch'))
 home = re.sub(r'<section class="connect" id="contact">', '<section class="connect" id="contact">', home)
 page("index.html", HOME_TITLE, home, active="index.html", loader=True, css=None, body_class="home", privacy=False,

@@ -132,19 +132,27 @@
     </div>
   </section>
 
-  <section id="journey" class="wrap" style="margin-bottom:0;position:relative">
-    <div class="journey reveal" id="gallery" data-tilt="3">
-      <!-- Set --journey-img: url(...) on .scene to use a real photo -->
-      <div class="scene" style="background-image:url(images/journey.jpg)" role="img" aria-label="Sunset over the sea seen from a ship's red deck"></div>
-      <div class="j-copy">
-        <div class="eyebrow" style="color:var(--fg)">My journey</div>
-        <h2>Exploring the<br>World Through<br>My Lens</h2>
-        <p>From breathtaking landscapes to <br>captivating moments — photography <br>has always been my escape and inspiration.</p>
-        <div><a class="btn" href="gallery.html">View Gallery <svg><use href="#arrow"/></svg></a></div>
+  <section id="journey" class="jr-sec">
+    <div class="jr reveal" id="gallery">
+      <div class="jr-media" aria-roledescription="carousel" aria-label="Journey photographs">
+          <img class="jr-img on" src="images/journey.jpg" alt="Sunset over the sea seen from a ship&rsquo;s red deck">
+          <img class="jr-img" src="images/g-harbor.jpg" alt="A cruise ship in harbour at dusk" loading="lazy">
+          <img class="jr-img" src="images/g-tanker.jpg" alt="A tanker on bright water at sunset" loading="lazy">
+          <img class="jr-img" src="images/g-clouds.jpg" alt="A traveller sitting above a sea of clouds" loading="lazy">
+        <div class="jr-tag top"><span class="eyebrow">My journey</span></div>
+        <div class="jr-tag bottom"><i></i><span>Capturing moments. Living stories.</span></div>
       </div>
-      <div class="pager"><span>01</span>
-        <button aria-label="Previous"><svg viewBox="0 0 9 9"><path d="M7 4.500H1.500M4 2L1.500 4.500 4 7"/></svg></button>
-        <button aria-label="Next"><svg viewBox="0 0 9 9"><path d="M2 4.500h5.500M5 2l2.500 2.500L5 7"/></svg></button>
+      <img class="jr-compass" src="images/compass.png" alt="" aria-hidden="true">
+      <div class="jr-copy">
+        <div class="eyebrow">My journey</div>
+        <h2>Exploring the<br>World Through<br><em>My Lens</em></h2>
+        <p>From breathtaking landscapes to <br>captivating moments &mdash; photography <br>has always been my escape and inspiration.</p>
+        <a class="jr-btn" href="gallery.html">View Gallery <svg><use href="#arrow"/></svg></a>
+      </div>
+      <div class="jr-pager">
+        <span class="jr-count"><b>01</b> / <span>04</span></span><i></i>
+        <button class="jr-prev" aria-label="Previous photo"><svg viewBox="0 0 16 16"><path d="M13 8H3.5M7.5 3.5L3 8l4.5 4.5"/></svg></button>
+        <button class="jr-next" aria-label="Next photo"><svg viewBox="0 0 16 16"><path d="M3 8h9.5M8.5 3.5L13 8l-4.5 4.5"/></svg></button>
       </div>
     </div>
   </section>

@@ -484,3 +484,89 @@
   .drives .dr-bg { object-position: 60% 50%; }
   .drives::before { background: linear-gradient(180deg, #070707 0%, rgba(7,7,7,.75) 30%, rgba(7,7,7,.85) 70%, #070707 100%); }
 }
+
+/* ================================================================ Journey card (matches the journey section design)
+   Sized in cqw against the design card (1890px wide): 1cqw = 18.9 design px. */
+.home #journey.jr-sec { position: relative; width: min(94.5vw, 1800px); max-width: none; margin: 40px auto 0; left: 50%; translate: -50% 0; }
+.home #journey.jr-sec::after { content: none; }
+.home #journey.jr-sec::before { content: ""; position: absolute; z-index: 1; inset: -30px 0 -30px 0; pointer-events: none;
+  background:
+    radial-gradient(16% 30px at 77% 30px, rgba(240,180,124,.32), transparent 75%),
+    radial-gradient(10% 24px at 12% 30px, rgba(240,180,124,.22), transparent 75%),
+    radial-gradient(12% 24px at 65% calc(100% - 30px), rgba(240,180,124,.24), transparent 75%); filter: blur(2px); }
+.jr { position: relative; container-type: inline-size; aspect-ratio: 1890 / 554; border-radius: 1.2cqw; overflow: hidden; isolation: isolate;
+  background: radial-gradient(60% 90% at 100% 0%, rgba(212,160,110,.07), transparent 60%), linear-gradient(100deg, #12100e 50%, #0b0a09 100%);
+  border: 1px solid rgba(205,155,110,.55);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,220,180,.05); }
+/* light streaks along the frame */
+.jr::after { content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; border-radius: inherit;
+  background:
+    radial-gradient(9cqw 3px at 12% 0, rgba(255,214,170,.95), transparent 70%),
+    radial-gradient(14cqw 4px at 77% 0, rgba(255,226,190,1), transparent 70%),
+    radial-gradient(9cqw 3px at 65% 100%, rgba(255,214,170,.9), transparent 70%),
+    radial-gradient(7cqw 1.6cqw at 77% 0, rgba(240,176,116,.22), transparent 70%),
+    radial-gradient(6cqw 1.4cqw at 65% 100%, rgba(240,176,116,.18), transparent 70%); }
+/* photo panel */
+.jr-media { position: absolute; z-index: 0; left: 0; top: 0; bottom: 0; width: 63cqw;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 74%, rgba(0,0,0,.55) 88%, transparent 100%); mask-image: linear-gradient(90deg, #000 0%, #000 74%, rgba(0,0,0,.55) 88%, transparent 100%); }
+.jr-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; opacity: 0; scale: 1.06; filter: saturate(1.45) contrast(1.12) brightness(1.06);
+  transition: opacity 1.2s ease, scale 6s ease-out; }
+.jr-img.on { opacity: 1; scale: 1; }
+.jr-media::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, transparent 22%, transparent 70%, rgba(0,0,0,.55) 100%), linear-gradient(90deg, rgba(0,0,0,.18), transparent 30%); }
+.jr-tag { position: absolute; z-index: 2; left: 2.27cqw; color: #ededed; }
+.jr-tag.top { top: 2.35cqw; }
+.jr-tag .eyebrow { font-size: .8cqw; letter-spacing: .42em; color: #f0f0f0; gap: .9cqw; }
+.jr-tag .eyebrow::after { width: 3.6cqw; background: rgba(230,230,230,.55); }
+.jr-tag.bottom { bottom: 1.45cqw; display: grid; gap: 1cqw; }
+.jr-tag.bottom i { display: block; width: 3.17cqw; height: 1px; background: linear-gradient(90deg, #e2ad80, rgba(226,173,128,.2)); }
+.jr-tag.bottom span { font-size: .72cqw; letter-spacing: .44em; text-transform: uppercase; color: #dadada; }
+/* compass */
+.jr-compass { position: absolute; z-index: 1; left: 89.4cqw; top: 1.7cqw; width: 10.4cqw; pointer-events: none; mix-blend-mode: screen; opacity: .95;
+  animation: jrspin 60s linear infinite; transform-origin: 72% 48%; }
+@keyframes jrspin { 0%, 100% { rotate: 0deg; } 50% { rotate: 4deg; } }
+/* copy */
+.jr-copy { position: absolute; z-index: 3; left: 63.7cqw; top: 3cqw; width: 30cqw; }
+.jr-copy .eyebrow { font-size: .8cqw; letter-spacing: .42em; color: #d9a06d; gap: 1cqw; }
+.jr-copy .eyebrow::after { width: 4.6cqw; background: linear-gradient(90deg, rgba(214,160,112,.85), rgba(214,160,112,.25)); }
+.jr-copy h2 { margin: 1.4cqw 0 1.5cqw; font-family: var(--font-display); font-weight: 400; font-size: 3.4cqw; line-height: .98; letter-spacing: -.01em; color: #f6f6f6; }
+.jr-copy h2 em { font-style: italic; font-weight: 400; font-size: 1.04em; background: linear-gradient(100deg, #f0c9a2 0%, #d9a173 50%, #b37b53 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: .06em; }
+.jr-copy p { margin: 0 0 1.75cqw; font-size: 1.06cqw; line-height: 1.5; font-weight: 400; color: #dedede; }
+.jr-btn { position: relative; display: inline-flex; align-items: center; gap: 1.6cqw; height: 3.2cqw; padding: 0 1.9cqw 0 1.95cqw; border-radius: 99px; font-size: .97cqw; font-weight: 400; color: #f4f4f4;
+  border: 1px solid rgba(214,160,112,.75); background: rgba(10,9,8,.5);
+  box-shadow: inset 0 0 14px rgba(212,150,100,.07), 0 0 18px rgba(212,150,100,.08); transition: background .35s, color .35s, box-shadow .4s, border-color .3s; }
+.jr-btn::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: -1px; height: 1px; background: linear-gradient(90deg, transparent, #ffd9b2, transparent); box-shadow: 0 0 8px rgba(255,200,150,.9); }
+.jr-btn svg { width: 1cqw; min-width: 12px; height: .75cqw; min-height: 9px; transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+.jr-btn:hover { background: #d9a06d; color: #0a0a0a; border-color: #e7b38a; box-shadow: 0 0 26px rgba(226,160,104,.4); }
+.jr-btn:hover svg { transform: translateX(6px); }
+/* pager */
+.jr-pager { position: absolute; z-index: 3; right: 2cqw; bottom: 2.8cqw; display: flex; align-items: center; gap: .9cqw; }
+.jr-count { font-family: var(--font-display); font-style: italic; font-size: 1.3cqw; color: #b9b9b9; letter-spacing: .04em; }
+.jr-count b { font-weight: 400; color: #e3a874; }
+.jr-pager > i { width: 1.1cqw; height: 1px; background: rgba(200,200,200,.35); margin-right: .4cqw; }
+.jr-pager button { width: 2.55cqw; height: 2.55cqw; min-width: 30px; min-height: 30px; border-radius: 50%; padding: 0; display: grid; place-items: center; cursor: pointer; color: #f2f2f2;
+  border: 1px solid rgba(214,160,112,.55); background: radial-gradient(circle, rgba(30,26,22,.9), rgba(8,8,8,.9));
+  transition: border-color .3s, box-shadow .4s, background .3s, color .3s, transform .3s; }
+.jr-pager .jr-next { border-color: rgba(236,186,140,.95); box-shadow: 0 0 14px rgba(226,160,104,.45), inset 0 0 8px rgba(226,160,104,.2); }
+.jr-pager button:hover { border-color: #f0c296; box-shadow: 0 0 20px rgba(226,160,104,.6); transform: scale(1.08); }
+.jr-pager svg { width: 42%; height: 42%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 880px) {
+  .home #journey.jr-sec { width: 100%; left: 0; translate: none; }
+  .jr { aspect-ratio: auto; border-radius: 14px; }
+  .jr-media { position: relative; width: 100%; height: 66cqw; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, #000 70%, transparent 100%); }
+  .jr-tag { left: 20px; }
+  .jr-tag.top { top: 20px; } .jr-tag.bottom { bottom: 26px; gap: 10px; }
+  .jr-tag .eyebrow { font-size: 10px; gap: 12px; } .jr-tag .eyebrow::after { width: 40px; }
+  .jr-tag.bottom i { width: 40px; } .jr-tag.bottom span { font-size: 9px; letter-spacing: .32em; }
+  .jr-compass { left: auto; right: -6px; top: calc(66cqw - 10px); width: 110px; opacity: .55; }
+  .jr-copy { position: relative; left: 0; top: 0; width: auto; padding: 10px 22px 0; }
+  .jr-copy .eyebrow { font-size: 10.5px; gap: 14px; } .jr-copy .eyebrow::after { width: 56px; }
+  .jr-copy h2 { font-size: 40px; margin: 16px 0 18px; }
+  .jr-copy p { font-size: 15px; margin-bottom: 24px; } .jr-copy p br { display: none; }
+  .jr-btn { height: 48px; padding: 0 26px; gap: 22px; font-size: 14px; }
+  .jr-pager { position: relative; right: auto; bottom: auto; padding: 26px 22px 26px; justify-content: flex-end; gap: 12px; }
+  .jr-count { font-size: 18px; } .jr-pager > i { width: 18px; }
+  .jr::after { background: radial-gradient(40% 3px at 30% 0, rgba(255,214,170,.9), transparent 70%), radial-gradient(40% 3px at 70% 100%, rgba(255,214,170,.8), transparent 70%); }
+}
+@media (prefers-reduced-motion: reduce) { .jr-compass { animation: none; } .jr-img { transition: opacity .3s; } }

@@ -115,3 +115,17 @@
       c.style.setProperty('--x',(e.clientX-r.left)+'px');c.style.setProperty('--y',(e.clientY-r.top)+'px');});
   });
 })();
+(function(){
+  // journey card slider: crossfade photos, 01 / 04 counter, arrows + autoplay (pauses on hover)
+  var jr=document.querySelector('.jr'); if(!jr) return;
+  var imgs=[].slice.call(jr.querySelectorAll('.jr-img')), cur=0, n=imgs.length, b=jr.querySelector('.jr-count b'), tot=jr.querySelector('.jr-count span'), timer=null;
+  if(tot) tot.textContent=(n<10?'0':'')+n;
+  function go(i){ imgs[cur].classList.remove('on'); cur=(i+n)%n; imgs[cur].classList.add('on'); b.textContent=(cur<9?'0':'')+(cur+1); }
+  function play(){ stop(); if(!matchMedia('(prefers-reduced-motion: reduce)').matches) timer=setInterval(function(){go(cur+1)},6000); }
+  function stop(){ if(timer) clearInterval(timer); timer=null; }
+  jr.querySelector('.jr-prev').addEventListener('click',function(){go(cur-1);play()});
+  jr.querySelector('.jr-next').addEventListener('click',function(){go(cur+1);play()});
+  jr.addEventListener('pointerenter',stop); jr.addEventListener('pointerleave',play);
+  imgs.forEach(function(im){ if(im.loading==='lazy') im.loading='eager'; });
+  play();
+})();
