@@ -108,7 +108,7 @@ def phero(eyebrow, title, lead, crumb, img=None, actions=""):
 home = (ROOT / "src/home-main.html").read_text(encoding="utf-8")
 home = (home.replace('href="#journey"><span class="c">', 'href="journey.html"><span class="c">')
             .replace('<a class="btn" href="#journey">Discover More', '<a class="btn" href="about.html">Discover More')
-            .replace('href="#expertise">Explore Skills', 'href="about.html#expertise">Explore Skills')
+            .replace('href="#stories">Read the Stories', 'href="stories.html">Read the Stories')
             .replace('href="#gallery">View Gallery', 'href="gallery.html">View Gallery')
             .replace('href="#contact">Get in Touch', 'href="contact.html">Get in Touch'))
 home = re.sub(r'<section class="connect" id="contact">', '<section class="connect" id="contact">', home)
@@ -118,38 +118,78 @@ page("index.html", "Dex World", home, active="index.html", loader=True, css=None
 # expertise block reused on the About page
 m = re.search(r'<section class="expertise" id="expertise">.*?</section>', home, re.S)
 expertise = m.group(0) if m else ""
-expertise = expertise.replace('<a class="btn" href="about.html#expertise">Explore Skills <svg><use href="#arrow"/></svg></a>',
-                              '<a class="btn" href="contact.html">Work with me <svg><use href="#arrow"/></svg></a>')
+
 
 # ---------------------------------------------------------------- ABOUT
-facts = ('<div class="facts reveal"><div class="fact"><b>5+</b><small>Years of experience</small></div>'
-         '<div class="fact"><b>50+</b><small>Projects completed</small></div>'
-         '<div class="fact"><b>100%</b><small>Passion</small></div>'
-         '<div class="fact"><b>2011</b><small>Based in Austria since</small></div></div>')
-
+ARW = '<svg><use href="#arrow"/></svg>'
 about_tl = [
-    ("Early years", "Turkey&rsquo;s south coast", "Grew up where the Mediterranean meets Anatolia, with parents working in hotel management. Hospitality was the family business and the first classroom."),
-    ("2011", "A new home in Austria", "Moved to Austria at the end of 2011 and began training at one of the country&rsquo;s top hospitality schools."),
-    ("2015", "Gold &amp; bronze at the AEHT", "Part of the school delegation that returned from the European tourism-school championships with medals &mdash; and organised a string of extracurricular projects along the way."),
-    ("2015", "NANO research camp", "Joined a research camp on the Baltic Sea, which later led to a meeting with the Federal President in Vienna."),
-    ("2016", "Rio 2016 Olympic internship", "Won an internship at the Summer Olympics after a radio call-out on Austrian station &Ouml;3 &mdash; a summer of long days in Rio de Janeiro."),
-    ("2018&ndash;19", "Climate, trains &amp; Kaospilot", "Travelled by train to the COP24 climate conference in Katowice and applied to Kaospilot in Aarhus to keep learning how to change things.")]
-tl_items = "".join('<div class="tl-item reveal"><div class="tl-card"><div class="tx"><span class="tl-year">%s</span><h3>%s</h3><p>%s</p></div></div></div>' % t for t in about_tl)
+    ("Early years", "Turkey&rsquo;s south coast", "Grew up where the Mediterranean meets Anatolia, with parents working in hotel management. Hospitality was the family business and the first classroom.", "g-harbor.jpg", "Turkey"),
+    ("2011", "A new home in Austria", "Moved to Austria at the end of 2011 and began training at one of the country&rsquo;s top hospitality schools.", "g-peaks.jpg", "Home base"),
+    ("2015", "Gold &amp; bronze at the AEHT", "Part of the school delegation that returned from the European tourism-school championships with medals &mdash; and a reception at the Hofburg.", "g-summit.jpg", "AEHT"),
+    ("2015", "NANO research camp", "Ten days of science and sea air on the Baltic Sea, which later led to a meeting with the Federal President in Vienna.", "g-tanker.jpg", "NANO"),
+    ("2016", "Rio 2016 Olympic internship", "Won an internship at the Summer Olympics after a radio call-out on &Ouml;3 &mdash; a summer of long days in Rio de Janeiro.", "g-sunset.jpg", "Olympics"),
+    ("2018&ndash;19", "Climate, trains &amp; Kaospilot", "Took the train to the COP24 climate conference in Katowice and applied to Kaospilot in Aarhus to keep learning how to change things.", "g-mist.jpg", "COP24")]
+tl_items = "".join('<div class="tl-item reveal"><div class="tl-card"><div class="ph"><img src="images/%s" alt="" loading="lazy"></div>'
+                   '<div class="tx"><span class="tl-year">%s</span><h3>%s</h3><p>%s</p><span class="tl-tag">%s</span></div></div></div>'
+                   % (img, yr, ttl, txt, tag) for yr, ttl, txt, img, tag in about_tl)
 
-about_body = (phero("About me", "Deniz", "A lateral thinker with affinity to design thinking &mdash; whose name, Deniz, means <em style=\"font-style:normal;color:var(--copper)\">sea</em> in Turkish.",
-                    "About", img="portrait.jpg", actions='<a class="btn" href="contact.html">Get in touch <svg><use href="#arrow"/></svg></a><a class="btn" href="journey.html">See my journey <svg><use href="#arrow"/></svg></a>')
-              + '<section class="sec"><div class="wrap grid2"><div class="sticky reveal"><div class="eyebrow">The story</div>'
-              '<h2 style="font-size:clamp(34px,4.4vw,56px);line-height:1.06;margin:20px 0 0">Stormy, short-tempered &mdash; as the sea.</h2></div>'
-              '<div class="prose reveal"><p class="big">Deniz is a lateral thinker with affinity to design thinking, and his name &mdash; the translation means sea &mdash; makes all honor.</p>'
-              '<p>He is constantly on the move and looking for new challenges, sometimes stormy and short-tempered, as the sea. He grew up on the south coast of Turkey, where his parents worked in hotel management, and discovered early on that he loves the hospitality business.</p>'
-              '<p>He graduated from a top hospitality school in Austria, where he has lived since the end of 2011. Between lessons he organised extracurricular projects, joined a research camp on the Baltic Sea in 2015 and won an internship at the 2016 Summer Olympics in Rio de Janeiro.</p>'
-              '<p>Today the curiosity stays the same: always chasing new challenges, exploring the unknown and pushing boundaries &mdash; with design thinking as the compass.</p></div></div></section>'
-              '<section class="sec"><div class="wrap">' + facts + '</div></section>'
-              '<section class="sec"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">Milestones</div><h2>The road so far</h2>'
-              '<p>A few of the stops that shaped the way of thinking.</p></div><div class="tl compact">' + tl_items + '</div></div></section>'
-              + expertise + connect_html("Have a project in mind?"))
-page("about.html", "About – Dex World", about_body, active="about.html",
-     desc="About Deniz – a lateral thinker with affinity to design thinking.")
+values = [
+    ("01", "Lateral thinking", "Seeing the problem from the side nobody is looking at &mdash; and asking the question that changes the brief.",
+     '<path d="M4 12h6l2-5 2 10 2-5h4"/>'),
+    ("02", "Hospitality at heart", "Raised between hotel lobbies: people first, details always, and a welcome that people remember.",
+     '<path d="M4 17h16M3 20h18M5.5 17a6.5 6.5 0 0 1 13 0M12 8.5V7M10.5 7h3"/>'),
+    ("03", "Sustain(-able) by choice", "Slow travel, honest questions about energy and waste, and the belief that business can leave things better.",
+     '<path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-7 10-9"/>')]
+values_html = "".join('<article class="val reveal" style="--d:%ss"><span class="val-n">%s</span><i><svg viewBox="0 0 24 24">%s</svg></i><h3>%s</h3><p>%s</p></article>'
+                      % (i * .12, n, ic, t, d) for i, (n, t, d, ic) in enumerate(values))
+
+numbers = [("2011", "In Austria since"), ("2", "Medals at the AEHT"), ("2016", "Rio Olympic internship"), ("16", "Stories published")]
+numbers_html = "".join('<div class="fact"><b>%s</b><small>%s</small></div>' % n for n in numbers)
+
+strip_imgs = ["g-summit.jpg", "ship.jpg", "g-clouds.jpg", "g-harbor.jpg", "g-fog.jpg", "g-sunset.jpg", "g-peaks.jpg", "g-tanker.jpg", "g-mist.jpg", "journey.jpg"]
+strip = "".join('<figure><img src="images/%s" alt="" loading="lazy"></figure>' % i for i in strip_imgs)
+outlets = ["Kleine Zeitung", "MeinBezirk", "&Ouml;3", "Vi2day", "APA-OTS", "Austria House", "KTS Villach", "Hayek Institut"]
+
+about_body = (
+    phero("About me", "Deniz", "A lateral thinker with affinity to design thinking &mdash; whose name, Deniz, means <em style=\"font-style:normal;color:var(--copper)\">sea</em> in Turkish.",
+          "About", img="portrait.jpg", actions='<a class="btn" href="#story">Read my story ' + ARW + '</a><a class="btn" href="journey.html">See my journey ' + ARW + '</a>')
+    # manifesto
+    + '<section class="ab-manifesto"><div class="wrap"><div class="eyebrow reveal">In a few words</div>'
+      '<p class="mf" data-words>I grew up between hotel lobbies and the Mediterranean. Today I chase <em>new challenges</em>, cross borders <em>by train</em>, '
+      'question how we use <em>energy</em> &mdash; and let design thinking be the <em>compass</em>.</p>'
+      '<div class="sig reveal"><span>Deniz Onaral</span><small>Dream. Explore. Xperate.</small></div></div></section>'
+    # story with framed photos
+    + '<section class="sec ab-story" id="story"><div class="wrap ab-story-grid">'
+      '<div class="ab-stack reveal" data-tilt="6"><div class="ab-ph a"><img src="images/g-summit.jpg" alt="Deniz sitting on a summit rock above the clouds"></div>'
+      '<div class="ab-ph b"><img src="images/ship.jpg" alt="The deck of a cargo ship at sea"></div><span class="ab-badge"><b>Since 2011</b><small>Austria</small></span></div>'
+      '<div class="prose reveal"><div class="eyebrow">The story</div><h2 class="ab-h">Stormy, short-tempered &mdash; as the sea.</h2>'
+      '<p class="big">Deniz is a lateral thinker with affinity to design thinking, and his name &mdash; the translation means sea &mdash; makes all honor.</p>'
+      '<p>He is constantly on the move and looking for new challenges, sometimes stormy and short-tempered, as the sea. He grew up on the south coast of Turkey, where his parents worked in hotel management, and discovered early on that he loves the hospitality business.</p>'
+      '<p>He graduated from a top hospitality school in Austria, where he has lived since the end of 2011. Between lessons he organised extracurricular projects, joined a research camp on the Baltic Sea in 2015 and won an internship at the 2016 Summer Olympics in Rio de Janeiro.</p>'
+      '<p>Today the curiosity stays the same: always chasing new challenges, exploring the unknown and pushing boundaries &mdash; with design thinking as the compass.</p></div></div></section>'
+    # name meaning band
+    + '<section class="ab-name"><img class="m" src="images/g-harbor.jpg" alt="" aria-hidden="true"><div class="wrap"><div class="ab-def reveal">'
+      '<div class="eyebrow">The name</div><h2>Deniz</h2><p class="ph">/de&middot;&#712;niz/ &nbsp;&middot;&nbsp; Turkish &nbsp;&middot;&nbsp; <em>noun</em></p>'
+      '<ol><li><b>the sea.</b> Calm one day, stormy the next &mdash; never standing still.</li><li><b>a person</b> who keeps moving toward the horizon.</li></ol></div></div></section>'
+    # numbers
+    + '<section class="sec ab-numbers"><div class="wrap"><div class="facts reveal">' + numbers_html + '</div></div></section>'
+    # values
+    + '<section class="sec ab-values"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">What I stand for</div><h2>Three things I never travel without</h2></div>'
+      '<div class="vals">' + values_html + '</div></div></section>'
+    # milestones
+    + '<section class="sec"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">Milestones</div><h2>The road so far</h2>'
+      '<p>A few of the stops that shaped the way of thinking.</p></div><div class="tl">' + tl_items + '</div>'
+      '<div class="ab-more reveal"><a class="btn" href="journey.html">Follow the full journey ' + ARW + '</a></div></div></section>'
+    # photo strip
+    + '<section class="ab-strip" aria-label="Photographs from the road"><div class="ab-track">' + strip + strip + '</div></section>'
+    # press
+    + '<section class="sec ab-press"><div class="wrap"><div class="eyebrow reveal">As featured in</div>'
+      '<div class="ab-outlets reveal">' + "".join('<span>%s</span>' % o for o in outlets) + '</div>'
+      '<a class="ab-press-link reveal" href="press.html">Read the press coverage ' + ARW + '</a></div></section>'
+    + expertise
+    + connect_html("Let&rsquo;s share a story", "Got an idea, an adventure or a question? I read every message.", "Get in touch", "contact.html", "g-peaks.jpg", "Say hello"))
+page("about.html", "About – Dex World", about_body, active="about.html", body_class="inner page-about",
+     desc="About Deniz – a lateral thinker with affinity to design thinking, travel and sustainability.")
 
 # ---------------------------------------------------------------- JOURNEY
 jr = [
