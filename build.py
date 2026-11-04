@@ -6,7 +6,7 @@ Reads src/home-main.html and the page bodies below, writes every *.html file
 next to this script. Shared CSS / JS / images live in css/, js/, images/.
 Replace the copy in this file (or move it to your CMS) when real content lands.
 """
-import re, pathlib
+import re, pathlib, json
 
 ROOT = pathlib.Path(__file__).parent
 LINKEDIN = "https://www.linkedin.com/in/deniz-onaral-39b955b6"
@@ -67,7 +67,7 @@ def connect_html(title="Have a project in mind?", text="Let&rsquo;s turn your id
             '<a class="btn" href="%s">%s <svg><use href="#arrow"/></svg></a></div></section>' % (img, eyebrow, title, text, href, btn))
 
 
-def page(fname, title, body, active=None, desc="", loader=False, data=False, css="css/premium.css", body_class="inner", privacy=True):
+def page(fname, title, body, active=None, desc="", loader=False, data=False, css="css/premium.css", body_class="inner", privacy=True, head_extra=""):
     loading = '"js","loading"' if loader else '"js"'
     loader_html = ('<div id="loader" aria-hidden="true"><span class="logo-mark"></span><div class="bar"></div><small>Dex World</small></div>'
                    if loader else "")
@@ -75,7 +75,7 @@ def page(fname, title, body, active=None, desc="", loader=False, data=False, css
     html = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             '<title>%s</title>\n<meta name="description" content="%s">\n<meta name="theme-color" content="#0a0a0a">\n'
-            '<link rel="icon" href="images/favicon.png">\n'
+            '<link rel="icon" href="images/favicon.png">\n%s'
             '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
             '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Trirong:wght@200;300&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap">\n'
             '<link rel="stylesheet" href="css/logo.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/pages.css"><link rel="stylesheet" href="css/theme.css">%s\n'
@@ -83,7 +83,7 @@ def page(fname, title, body, active=None, desc="", loader=False, data=False, css
             '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
             '<symbol id="arrow" viewBox="0 0 14 10"><path d="M0 5h12M8 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1"/></symbol></defs></svg>\n'
             '%s\n%s\n<main>\n%s\n</main>\n%s\n%s\n</body>\n</html>\n'
-            % (title, desc or "Dex World – Dream. Explore. Xperate. A journey beyond limits.",
+            % (title, desc or "Dex World – Dream. Explore. Xperate. A journey beyond limits.", head_extra,
                ('<link rel="stylesheet" href="%s">' % css) if css else "", (' class="%s"' % body_class) if body_class else "",
                loading, loader_html, nav_html(active), overlay_html(), body, footer_html(privacy), scripts))
     (ROOT / fname).write_text(html, encoding="utf-8")
@@ -104,6 +104,55 @@ def phero(eyebrow, title, lead, crumb, img=None, actions=""):
             % (pimg, crumb, eyebrow, title, lead, ('<div class="phero-actions">%s</div>' % actions) if actions else ""))
 
 
+
+# ---------------------------------------------------------------- HOME SEO / social preview
+SITE_URL = "https://dinozar.wtf"   # change if the site is published elsewhere
+HOME_TITLE = "Dex World by Deniz Onaral | Travel & Sustainability Journal"
+HOME_DESC = ("Dream. Explore. Xperate. The travel and sustainability journal of Deniz Onaral – Rio 2016 Olympics, "
+             "COP24 by train, hospitality and design thinking.")
+OG_TITLE = "Dex World – Dream. Explore. Xperate."
+OG_DESC = "Travel stories, sustainability and design thinking by Deniz Onaral. A journey beyond limits."
+home_ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {"@type": "WebSite", "@id": SITE_URL + "/#website", "url": SITE_URL + "/", "name": "Dex World",
+         "alternateName": ["Dinozar", "Dinozar – Adventures"], "description": HOME_DESC, "inLanguage": "en-GB",
+         "publisher": {"@id": SITE_URL + "/#deniz"}},
+        {"@type": "Person", "@id": SITE_URL + "/#deniz", "name": "Deniz Onaral", "url": SITE_URL + "/",
+         "image": SITE_URL + "/images/portrait.jpg", "description": "Lateral thinker with an affinity for design thinking; travel and sustainability writer.",
+         "homeLocation": {"@type": "Country", "name": "Austria"},
+         "knowsAbout": ["Travel", "Sustainability", "Design thinking", "Hospitality", "Photography", "Climate action"],
+         "sameAs": [LINKEDIN, INSTAGRAM]},
+        {"@type": "WebPage", "@id": SITE_URL + "/#home", "url": SITE_URL + "/", "name": HOME_TITLE, "description": HOME_DESC,
+         "isPartOf": {"@id": SITE_URL + "/#website"}, "about": {"@id": SITE_URL + "/#deniz"},
+         "primaryImageOfPage": {"@type": "ImageObject", "url": SITE_URL + "/images/og-home.jpg", "width": 1200, "height": 630},
+         "inLanguage": "en-GB"}]}
+HOME_HEAD = "\n".join([
+    '<link rel="canonical" href="%s/">' % SITE_URL,
+    '<meta name="robots" content="index, follow, max-image-preview:large">',
+    '<meta name="author" content="Deniz Onaral">',
+    '<link rel="apple-touch-icon" href="images/apple-touch-icon.png">',
+    '<link rel="preload" as="image" href="images/hero-bg.jpg" fetchpriority="high">',
+    '<meta property="og:type" content="website">',
+    '<meta property="og:site_name" content="Dex World">',
+    '<meta property="og:locale" content="en_GB">',
+    '<meta property="og:url" content="%s/">' % SITE_URL,
+    '<meta property="og:title" content="%s">' % OG_TITLE,
+    '<meta property="og:description" content="%s">' % OG_DESC,
+    '<meta property="og:image" content="%s/images/og-home.jpg">' % SITE_URL,
+    '<meta property="og:image:secure_url" content="%s/images/og-home.jpg">' % SITE_URL,
+    '<meta property="og:image:type" content="image/jpeg">',
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    '<meta property="og:image:alt" content="Dex World – Dream. Explore. Xperate. Black-and-white portrait of Deniz Onaral">',
+    '<meta name="twitter:card" content="summary_large_image">',
+    '<meta name="twitter:title" content="%s">' % OG_TITLE,
+    '<meta name="twitter:description" content="%s">' % OG_DESC,
+    '<meta name="twitter:image" content="%s/images/og-home.jpg">' % SITE_URL,
+    '<meta name="twitter:image:alt" content="Dex World – Dream. Explore. Xperate.">',
+    '<script type="application/ld+json">%s</script>' % json.dumps(home_ld, ensure_ascii=False, separators=(",", ":")),
+]) + "\n"
+
 # ---------------------------------------------------------------- HOME
 home = (ROOT / "src/home-main.html").read_text(encoding="utf-8")
 home = (home.replace('href="#journey"><span class="c">', 'href="journey.html"><span class="c">')
@@ -112,8 +161,8 @@ home = (home.replace('href="#journey"><span class="c">', 'href="journey.html"><s
             .replace('href="#gallery">View Gallery', 'href="gallery.html">View Gallery')
             .replace('href="#contact">Get in Touch', 'href="contact.html">Get in Touch'))
 home = re.sub(r'<section class="connect" id="contact">', '<section class="connect" id="contact">', home)
-page("index.html", "Dex World", home, active="index.html", loader=True, css=None, body_class="home", privacy=False,
-     desc="Dex World – Dream. Explore. Xperate. A journey beyond limits.")
+page("index.html", HOME_TITLE, home, active="index.html", loader=True, css=None, body_class="home", privacy=False,
+     desc=HOME_DESC, head_extra=HOME_HEAD)
 
 # expertise block reused on the About page
 m = re.search(r'<section class="expertise" id="expertise">.*?</section>', home, re.S)
