@@ -129,3 +129,10 @@
   imgs.forEach(function(im){ if(im.loading==='lazy') im.loading='eager'; });
   play();
 })();
+(function(){
+  // journey chapters: gentle photo parallax
+  var ims=[].slice.call(document.querySelectorAll('.page-journey .ch-frame img')); if(!ims.length||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var tick=false; function upd(){ tick=false; var h=innerHeight; ims.forEach(function(im){ var r=im.parentNode.getBoundingClientRect(); if(r.bottom<0||r.top>h) return;
+    im.style.setProperty('--py', (((r.top+r.height/2)-h/2)/h*-30).toFixed(1)+'px'); }); }
+  addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(upd)} },{passive:true}); upd();
+})();

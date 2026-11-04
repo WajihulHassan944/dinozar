@@ -90,7 +90,7 @@ def page(fname, title, body, active=None, desc="", loader=False, data=False, css
     print("wrote", fname, len(html) // 1024, "KB")
 
 
-PHERO_IMG = {"About": "portrait.jpg", "Journey": "ship.jpg", "Gallery": "g-clouds.jpg", "Press": "g-harbor.jpg",
+PHERO_IMG = {"About": "portrait.jpg", "Journey": "journey-ship.jpg", "Gallery": "g-clouds.jpg", "Press": "g-harbor.jpg",
              "Wiki": "g-fog.jpg", "Tips & Tricks": "g-sunset.jpg", "Stories": "g-mist.jpg", "Contact": "g-tanker.jpg",
              "Privacy Policy": "g-peaks.jpg"}
 
@@ -241,22 +241,66 @@ page("about.html", "About – Dex World", about_body, active="about.html", body_
      desc="About Deniz – a lateral thinker with affinity to design thinking, travel and sustainability.")
 
 # ---------------------------------------------------------------- JOURNEY
+# (place, year, title, story, photo, tag, map x, map y) - map coords are in images/journey-map.svg's 1000x653 viewBox
 jr = [
-    ("Early years", "Where it began", "Turkey&rsquo;s south coast &mdash; family, hotels and the sea that gave him his name.", "g-harbor.jpg", "Turkey"),
-    ("2011", "Austria", "A new country, a new language and a hospitality school in the mountains.", "g-peaks.jpg", "Home base"),
-    ("2015", "Medals &amp; the Hofburg", "Gold and bronze at the European tourism-school championships and a reception hosted by the Federal President.", "g-summit.jpg", "AEHT"),
-    ("2015", "Baltic Sea research camp", "Ten days of science, sea air and big questions on the NANO research camp.", "g-tanker.jpg", "NANO"),
-    ("2016", "Rio de Janeiro", "A radio call-out, a dream internship and a summer at the Olympic Games &mdash; documented day by day in the travel diary.", "g-sunset.jpg", "Olympics"),
-    ("2018", "Katowice by train", "Choosing the slow way to the COP24 climate conference: fewer emissions, more stories.", "g-clouds.jpg", "COP24"),
-    ("2019", "Aarhus calling", "An application to Kaospilot &mdash; because design, change-making and a little chaos belong together.", "g-mist.jpg", "Kaospilot")]
-jr_items = "".join('<div class="tl-item reveal"><div class="tl-card"><div class="ph"><img loading="lazy" src="images/%s" alt=""></div>'
-                   '<div class="tx"><span class="tl-year">%s</span><h3>%s</h3><p>%s</p><span class="tl-tag">%s</span></div></div></div>' % (i, y, t, d, tag)
-                   for (y, t, d, i, tag) in jr)
+    ("Turkish coast", "Early years", "Where it began",
+     "Turkey&rsquo;s south coast &mdash; family, hotels and the sea that gave him his name. Hospitality was the family business, and the hotel lobby was the first classroom.",
+     "journey-ship.jpg", "Turkey", 827.8, 582.0),
+    ("Austria", "2011", "A new home in Austria",
+     "A new country, a new language and one of Austria&rsquo;s top hospitality schools. The mountains became home base for everything that followed.",
+     "g-peaks.jpg", "Home base", 515.7, 366.6),
+    ("Vienna", "2015", "Medals &amp; the Hofburg",
+     "Gold and bronze at the European tourism-school championships (AEHT) &mdash; and a reception at the Hofburg hosted by the Federal President.",
+     "g-summit.jpg", "AEHT", 562.4, 329.0),
+    ("Baltic Sea", "2015", "Baltic Sea research camp",
+     "Ten days of science, sea air and big questions on the NANO research camp &mdash; the start of a long fascination with energy and the environment.",
+     "g-harbor.jpg", "NANO", 527.8, 166.4),
+    ("Rio de Janeiro", "2016", "Rio de Janeiro",
+     "A radio call-out on &Ouml;3, a dream internship and a summer at the Olympic Games &mdash; documented day by day in the travel diary.",
+     "g-sunset.jpg", "Olympics", 18.0, 552.0),
+    ("Katowice", "2018", "Katowice by train",
+     "Choosing the slow way to the COP24 climate conference: fewer emissions, more conversations, and a story about how we travel.",
+     "g-clouds.jpg", "COP24", 611.5, 279.6),
+    ("Aarhus", "2019", "Aarhus calling",
+     "An application to Kaospilot &mdash; because design, change-making and a little chaos belong together.",
+     "g-mist.jpg", "Kaospilot", 448.1, 131.2)]
+
+def route_path(a, b, lift=.22):
+    (x1, y1), (x2, y2) = a, b
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+    dx, dy = x2 - x1, y2 - y1
+    return "M%.1f %.1fQ%.1f %.1f %.1f %.1f" % (x1, y1, mx + dy * lift, my - dx * lift, x2, y2)
+pts = [(x, y) for *_, x, y in jr]
+legs = [route_path(pts[i], pts[i + 1], -.28 if i == 3 else (.3 if i == 4 else .22)) for i in range(len(pts) - 1)]
+route_svg = ('<svg class="route-lines" viewBox="0 0 1000 653" preserveAspectRatio="none" aria-hidden="true"><defs>'
+             '<linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6c99c"/><stop offset="1" stop-color="#c88c5f"/></linearGradient>'
+             '<filter id="rgl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
+             + "".join('<path class="leg" pathLength="1" style="--i:%d" d="%s"/>' % (i, d) for i, d in enumerate(legs)) + '</svg>')
+LBL = {0: "l", 1: "l", 2: "r", 3: "r", 4: "r", 5: "r", 6: "l"}
+pins = "".join('<a class="pin %s" href="#ch-%d" style="left:%.2f%%;top:%.2f%%;--i:%d"><i>%d</i><span><b>%s</b><small>%s</small></span></a>'
+               % (LBL[i], i + 1, x / 10, y / 6.53, i, i + 1, place, yr) for i, (place, yr, _t, _d, _img, _tag, x, y) in enumerate(jr))
+route_facts = [("7", "Stops"), ("3", "Continents"), ("8", "Years on the road"), ("1", "Summit by train")]
+
+chapters = "".join(
+    '<article class="ch reveal" id="ch-%d"><div class="ch-ph"><div class="ch-frame"><img src="images/%s" alt="%s" loading="lazy"></div></div>'
+    '<div class="ch-tx"><span class="ch-n" aria-hidden="true">%02d</span><div class="ch-meta"><span>%s</span><i></i><span>%s</span></div>'
+    '<h3>%s</h3><p>%s</p><span class="tl-tag">%s</span></div></article>'
+    % (i + 1, img, place, i + 1, yr, place, t, d, tag) for i, (place, yr, t, d, img, tag, _x, _y) in enumerate(jr))
+
 journey_body = (phero("My journey", "Exploring the world <em>through my lens</em>", "From breathtaking landscapes to captivating moments &mdash; photography has always been my escape and inspiration. Follow the route, chapter by chapter.",
-                      "Journey", actions='<a class="btn" href="gallery.html">View gallery <svg><use href="#arrow"/></svg></a><a class="btn" href="stories.html">Read the stories <svg><use href="#arrow"/></svg></a>')
-                + '<section class="sec"><div class="wrap"><div class="tl">' + jr_items + '</div></div></section>'
-                + connect_html("Where to next?", "Every journey starts with a conversation.", "Plan something together", "contact.html", "quote.jpg", "Next chapter"))
-page("journey.html", "Journey – Dex World", journey_body, active="journey.html", desc="The route so far: Turkey, Austria, the Baltic Sea, Rio 2016, Katowice and beyond.")
+                      "Journey", actions='<a class="btn" href="#route">Follow the route ' + ARW + '</a><a class="btn" href="gallery.html">View gallery ' + ARW + '</a>')
+    + '<section class="sec jn-route" id="route"><div class="wrap jn-route-grid"><div class="jn-route-copy reveal"><div class="eyebrow">The route</div>'
+      '<h2>Seven stops,<br><em>one curious mind</em></h2><p>From the Turkish coast to the mountains of Austria, a summer in Rio and a train ride to a climate summit &mdash; every stop changed the way of thinking.</p>'
+      '<div class="jn-facts">' + "".join('<div><b>%s</b><small>%s</small></div>' % f for f in route_facts) + '</div></div>'
+      '<div class="route reveal"><img class="route-map" src="images/journey-map.svg" alt="Map of Europe showing the route from the Turkish coast to Austria, Vienna, the Baltic Sea, Rio de Janeiro, Katowice and Aarhus">'
+      + route_svg + pins + '<span class="route-out" style="left:1.8%;top:84.5%"><span>&larr; 10,000 km</span></span></div></div></section>'
+    + '<section class="sec jn-chapters"><div class="wrap"><div class="sec-head reveal"><div class="eyebrow">Chapters</div><h2>The road so far</h2>'
+      '<p>Seven chapters, one story &mdash; scroll through the places that shaped it.</p></div><div class="chs">' + chapters + '</div></div></section>'
+    + '<section class="quote jn-quote" aria-label="Quote"><img class="m" src="images/g-sunset.jpg" alt="" aria-hidden="true"><div class="q reveal">'
+      '<blockquote>The world is a book, and those who do not travel read only one page.</blockquote><cite>Saint Augustine</cite></div></section>'
+    + connect_html("Where to next?", "Every journey starts with a conversation.", "Plan something together", "contact.html", "g-peaks.jpg", "Next chapter"))
+page("journey.html", "Journey – Dex World", journey_body, active="journey.html", body_class="inner page-journey",
+     desc="The route so far: Turkey, Austria, the Baltic Sea, Rio 2016, Katowice and beyond.")
 
 # ---------------------------------------------------------------- GALLERY
 gallery = [
